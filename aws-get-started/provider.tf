@@ -1,16 +1,18 @@
 /*
   Made by Alejandro de Jongh
 
-  Provider definition, using backend to store .tfstate]
+  Provider definition, using backend to store *.tfstate
+
+  You can comment out the cloud block if you don't want to use Terraform Cloud to store the *.tfstate
 */
 
 terraform {
-  cloud {
-    organization = "hc-training"
-    workspaces {
-      name = "aws-get-started"
-    }
-  }
+  # cloud {
+  #   organization = "hc-training"
+  #   workspaces {
+  #     name = "aws-get-started"
+  #   }
+  # }
 
   required_providers {
     aws = {

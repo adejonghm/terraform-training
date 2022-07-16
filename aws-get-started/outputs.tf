@@ -2,7 +2,7 @@
   Made by Alejandro de Jongh
 
   Query data with outputs
-*/ 
+*/
 
 output "instance_id" {
   description = "ID of the EC2 instance"
