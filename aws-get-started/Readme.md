@@ -6,10 +6,10 @@ Two types of authentication are used in this training.
 
 ### Using the profile configs for AWS.
 
-In this case, it is necessary to have the `AWS CLI` installed, to install it following the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Once the CLI is installed execute the following command:
+In this case, it is necessary to have the `AWS CLI` installed, to install it following the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Once the CLI is installed execute the following command in the terminal:
 
 ```sh
-$> aws configure --profile <profile_name>
+$_ aws configure --profile <profile_name>
 ```
 
 This command line will prompt you for the `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`. These values are not persistent, they are valid only for the session in which this command is executed. The profile_name can be any, chosen by you. After that, use this profile_name in the provider block of the `provider.tf` file, as follows:
@@ -25,9 +25,9 @@ For this training, we recommend using this type of authentication since you do n
 #### Linux
 
 ```sh
-$> export AWS_ACCESS_KEY_ID="<key_ID>"
+$_ export AWS_ACCESS_KEY_ID="<key_ID>"
 
-$> export AWS_SECRET_ACCESS_KEY="<secret_key_ID>"
+$_ export AWS_SECRET_ACCESS_KEY="<secret_key_ID>"
 ```
 
 #### Windows
