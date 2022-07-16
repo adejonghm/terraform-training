@@ -33,9 +33,9 @@ export AWS_SECRET_ACCESS_KEY="<secret_key_ID>"
 #### Windows
 
 ```Powershell
-$> $Env:AWS_ACCESS_KEY_ID = "<key_ID>"
+$Env:AWS_ACCESS_KEY_ID = "<key_ID>"
 
-$> $Env:AWS_SECRET_ACCESS_KEY = "<secret_key_ID>"
+$Env:AWS_SECRET_ACCESS_KEY = "<secret_key_ID>"
 ```
 
 If you use this way, the values of the variables are not persistent, for the variables to persist over time you must create those variables together with the environment variables of the operating system, which is recommended. There is another way to store the `access_key` and `secret_key` values, to store them directly in the Terraform code as plain text, which is not highly recommended. We use this option for this lab because we create temporary environments on AWS, with a maximum lifetime of 4 hours. If you want to do this Training Path, follow this [link](https://learn.hashicorp.com/collections/terraform/aws-get-started).
