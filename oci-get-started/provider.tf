@@ -1,3 +1,9 @@
+/*
+  Made by Alejandro de Jongh
+
+  Provider definition
+*/
+
 terraform {
   required_providers {
     oci = {
@@ -7,7 +13,7 @@ terraform {
 }
 
 provider "oci" {
-  region              = "us-ashburn-1"
+  region              = var.region
   auth                = "SecurityToken"
   config_file_profile = "learn-terraform"
 }
