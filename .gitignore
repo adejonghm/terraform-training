@@ -3,8 +3,8 @@
 
 ### Terraform ###
 # Local .terraform directories
-**/.infracost
-**/.terraform/*
+.infracost
+.terraform*
 *.lock*
 
 # .tfstate files
