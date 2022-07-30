@@ -15,11 +15,11 @@ output "vcn_dir" {
 }
 
 output "subnet_dir" {
-    description = "CIDR block of the Dev Subnet"
-    value = oci_core_subnet.dev.cidr_block
+  description = "CIDR block of the Dev Subnet"
+  value       = oci_core_subnet.dev.cidr_block
 }
 
-output "subnet parent ID" {
-    description = "value"
-    value = oci_core_subnet.dev.vcn_id
+output "subnet_parent_ID" {
+  description = "value"
+  value       = oci_core_subnet.dev.vcn_id
 }
