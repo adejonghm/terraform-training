@@ -1,6 +1,6 @@
 # Get Started AWS
 
-This training is dedicated to the AWS provider, in it, an EC2 instance is created. All the code is in `aws_instance.tf`
+This training is dedicated to the AWS provider, in it, an EC2 instance is created, you can find it in `aws_instance.tf`
 
 Two types of authentication are used in this training.
 

@@ -1,6 +1,6 @@
 # Get Started Oracle Cloud Infrastructure
 
-This training is dedicated to the Oracle Cloud Infrastructure provider, in it, an VCN instance is created. (`oci_vcn.tf`)
+This training is dedicated to the Oracle Cloud Infrastructure provider, in it, a VCN instance is created, you can find it in `oci_vcn.tf`
 
 ## Steps to configure the CLI
 
