@@ -8,6 +8,14 @@
 
 
 terraform {
+  cloud {
+    organization = "hc-training"
+
+    workspaces {
+      name = "az-get-started"
+    }
+  }
+  
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
