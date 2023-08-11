@@ -1,6 +1,6 @@
-# Get Started AWS
+# AWS Get Started
 
-This training is dedicated to the AWS provider, in it, an EC2 instance is created, you can find it in `aws_instance.tf`
+This is a HashiCorp Get Started training. In it, an EC2 instance is created, and you can see its declaration in the following file `aws_instance.tf`
 
 Two types of authentication are used in this training.
 
