@@ -1,4 +1,3 @@
-############################################# TERRAFORM #############################################
 resource "aws_security_group" "sg_app" {
   name        = join("-", [var.prefix, "security", "group", format("%02d", var.number_of_sequence)])
   description = join(" ", [var.prefix, "security", "group", lower(var.environment)])

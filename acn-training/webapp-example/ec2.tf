@@ -1,4 +1,3 @@
-############################################# TERRAFORM #############################################
 resource "aws_instance" "ec2_linux" {
   count = var.counter
 

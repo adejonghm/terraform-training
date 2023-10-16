@@ -1,1 +1,0 @@
-# \[Harness\] Pipeline para Infraestrutura

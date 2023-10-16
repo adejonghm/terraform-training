@@ -1,23 +1,22 @@
-############################################# TERRAFORM #############################################
-
 terraform {
-  backend "s3" {
-    bucket  = "tf-state-file-853595176342"
-    key     = "tf-acn-treinamento/alejandro/tf-acn-webservers-challenge.tfstate"
-    region  = "us-east-1"
-    profile = "tf-acn-treinamento"
-  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.5.0"
+      version = "~> 5.0"
     }
+  }
+
+  backend "s3" {
+    bucket = "tf-state-file"
+    key    = "webservers-challenge/wsc.tfstate"
+    region = "us-east-1"
+    ## profile = "tf-acn-treinamento"
   }
 }
 
 provider "aws" {
-  region  = var.region
-  profile = var.profile
+  region = var.region
+  ## profile = var.profile
 }
 
 resource "random_string" "suffix" {
@@ -26,5 +25,3 @@ resource "random_string" "suffix" {
   upper   = false
   special = false
 }
-
-############################################# TERRAFORM #############################################

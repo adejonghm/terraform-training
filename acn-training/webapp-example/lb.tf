@@ -1,4 +1,3 @@
-############################################# TERRAFORM #############################################
 resource "aws_lb" "alb" {
   name               = join("-", [lower(var.prefix), "alb", lower(var.environment), "${random_string.suffix.result}", format("%02d", sum([var.number_of_sequence, 0]))])
   internal           = false
