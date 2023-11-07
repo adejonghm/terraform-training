@@ -14,12 +14,16 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "s3" {
+    bucket = "ud30183408-state-files"
+    key    = "30183408.tfstate"
+    region = "us-west-1"
+  }
 }
 
 provider "aws" {
-  region     = "us-west-1"
-  access_key = var.AWS_ACCESS_KEY_ID
-  secret_key = var.AWS_SECRET_ACCESS_KEY
+  region = "us-west-1"
 
   default_tags {
     tags = {
