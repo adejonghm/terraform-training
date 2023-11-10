@@ -14,7 +14,7 @@ resource "azurerm_resource_group" "terraform-rs-group" {
 
 
 resource "azurerm_storage_account" "az_storage-tfstate-files" {
-  name                     = "ud30183408-state-files"
+  name                     = "ud30183408statefiles"
   resource_group_name      = azurerm_resource_group.terraform-rs-group.name
   location                 = azurerm_resource_group.terraform-rs-group.location
   account_tier             = var.account_tier
