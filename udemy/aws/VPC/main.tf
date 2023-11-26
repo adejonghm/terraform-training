@@ -2,7 +2,7 @@
 Developed by adejonghm
 ----------
 
-November 1, 2023
+November 26, 2023
 */
 
 terraform {
@@ -16,14 +16,14 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "ud30183408-state-files"
-    key    = "30183408.tfstate"
+    key    = "udemy-vpc/terraform.tfstate" # name and path of the tfstate file
+    bucket = "tfstateudemy30183408"        # name of the bucket
     region = "us-west-1"
   }
 }
 
 provider "aws" {
-  region                   = var.region
+  region                   = var.aws_region
   shared_credentials_files = ["$HOME/.aws/credentials"]
 
   default_tags {

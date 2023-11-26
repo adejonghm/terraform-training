@@ -2,10 +2,10 @@
 Developed by adejonghm
 ----------
 
-November 1, 2023
+November 26, 2023
 */
 
-variable "region" {
+variable "aws_region" {
   type        = string
   default     = "us-west-1"
   description = "AWS Region that I'm using"

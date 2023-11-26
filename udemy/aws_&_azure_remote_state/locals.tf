@@ -1,8 +1,9 @@
 /*
 Developed by adejonghm
 ----------
+November 23, 2023
 
-November 10, 2023
+Locals are used by Azure
 */
 
 locals {
