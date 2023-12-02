@@ -21,13 +21,6 @@ terraform {
       version = "~> 3.0"
     }
   }
-
-  # backend "azurerm" {
-  #   resource_group_name  = "terraform"
-  #   storage_account_name = "tfstateud30183408"
-  #   container_name       = "remote-state"
-  #   key                  = "30183408.tfstate" # name and path of the tfstate file
-  # }
 }
 
 provider "aws" {
