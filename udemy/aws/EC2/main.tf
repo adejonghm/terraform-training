@@ -18,12 +18,12 @@ terraform {
   backend "s3" {
     key    = "udemy-ec2/terraform.tfstate" # name and path of the tfstate file
     bucket = "tfstateudemy30183408"        # name of the bucket
-    region = "us-west-1"
+    region = "sa-east-1"
   }
 }
 
 provider "aws" {
-  region                   = "us-west-1"
+  region                   = var.region
   shared_credentials_files = ["$HOME/.aws/credentials"]
 
   default_tags {
@@ -39,6 +39,6 @@ data "terraform_remote_state" "vpc" {
   config = {
     key    = "udemy-vpc/terraform.tfstate"
     bucket = "tfstateudemy30183408"
-    region = "us-west-1"
+    region = var.region
   }
 }

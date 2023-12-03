@@ -15,16 +15,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.0"
-    }
   }
 }
 
 provider "aws" {
-  region                   = var.aws_region
+  region                   = var.region
   shared_credentials_files = ["$HOME/.aws/credentials"]
 
   default_tags {
@@ -33,8 +28,4 @@ provider "aws" {
       managed-by = "terraform"
     }
   }
-}
-
-provider "azurerm" {
-  features {}
 }

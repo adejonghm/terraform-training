@@ -11,10 +11,10 @@ resource "aws_key_pair" "udemy_tf_ssh" {
 }
 
 resource "aws_instance" "udemy_tf" {
-  ami                         = "ami-0cbd40f694b804622"
+  ami                         = var.ami_id
   key_name                    = aws_key_pair.udemy_tf_ssh.key_name
   subnet_id                   = data.terraform_remote_state.vpc.outputs.subnet_id
-  instance_type               = "t2.micro"
+  instance_type               = var.ec2_type
   associate_public_ip_address = true
 
   vpc_security_group_ids = [

@@ -16,10 +16,10 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "terraform"
-    storage_account_name = "tfstateudemy30183408"
-    container_name       = "remote-state"
     key                  = "udemy-vnet/30183408.tfstate" # name and path of the tfstate file
+    container_name       = "remote-state"
+    resource_group_name  = "TerraformRootRG"
+    storage_account_name = "tfstateudemy30183408"
   }
 }
 
