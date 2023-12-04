@@ -2,7 +2,7 @@
 Developed by adejonghm
 ----------
 
-November 29, 2023
+December 3, 2023
 */
 
 variable "location" {
@@ -13,6 +13,6 @@ variable "location" {
 
 variable "rg_name" {
   type        = string
-  default     = "TerraformVpcRG"
-  description = "Resource Group name for a Virtual Network"
+  default     = "TerraformVmRG"
+  description = "Resource Group name for a Linux Virtual Machine"
 }
