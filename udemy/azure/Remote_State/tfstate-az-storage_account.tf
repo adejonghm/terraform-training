@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "terraform_root" {
 
 resource "azurerm_storage_account" "tfstates" {
   name                     = var.storage_account_name
-  location                 = azurerm_resource_group.terraform_root.location
+  location                 = var.location
   account_tier             = var.account_tier
   resource_group_name      = azurerm_resource_group.terraform_root.name
   account_replication_type = var.account_replication_type
