@@ -16,6 +16,7 @@ resource "aws_s3_bucket" "tfstate" {
 # Enabling version control in TfState
 resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.tfstate.id
+
   versioning_configuration {
     status = "Enabled"
   }

@@ -18,7 +18,7 @@ terraform {
   backend "s3" {
     key    = "udemy-vpc/terraform.tfstate" # name and path of the tfstate file
     bucket = "tfstateudemy30183408"        # name of the bucket
-    region = "sa-east-1"
+    region = "us-east-1"
   }
 }
 
