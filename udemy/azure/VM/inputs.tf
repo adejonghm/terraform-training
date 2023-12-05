@@ -20,35 +20,35 @@ variable "rg_name" {
 variable "public_ip_name" {
   type        = string
   default     = "terraform-vm-public-ip"
-  description = ""
+  description = "Public IP address of the virtual machine"
 }
 
 variable "allocation_method" {
   type        = string
   default     = "Dynamic"
-  description = ""
+  description = "Allocation method for the IP address of the Virtual Machine"
 }
 
 variable "network_interface_name" {
   type        = string
   default     = "terraform-vm-net_interface"
-  description = ""
+  description = "Network interface name used in the Virtual Machine"
 }
 
 variable "linux_vm_name" {
   type        = string
   default     = "udemyTfLinuxVM"
-  description = ""
+  description = "Name of the Virtual Machine used"
 }
 
 variable "linux_vm_size" {
   type        = string
   default     = "Standard_B1s"
-  description = "value"
+  description = "Virtual Machine type and size"
 }
 
 variable "linux_vm_user" {
   type        = string
   default     = "terraform"
-  description = ""
+  description = "User created to access the Virtual Machine"
 }

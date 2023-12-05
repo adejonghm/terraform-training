@@ -14,8 +14,8 @@ variable "region" {
 
 variable "ami_id" {
   type        = string
-  default     = "ami-0b6c2d49148000cd5"
-  description = "Ubuntu image ID in Sao Paulo region"
+  default     = "ami-0f890494e52693975"
+  description = "Ubuntu image ID in US East 1"
 }
 
 variable "ec2_type" {
