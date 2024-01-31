@@ -75,3 +75,8 @@ terraform.rc
 *.plan
 *.out
 *.tfplan
+
+### Local ###
+*.pdf
+*.htm
+*.html
