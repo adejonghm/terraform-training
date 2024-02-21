@@ -11,6 +11,7 @@ resource "aws_key_pair" "udemy_tf_ssh" {
 }
 
 resource "aws_instance" "udemy_tf" {
+  # If you use an Ubuntu Image, the default user is ubuntu
   ami                         = var.ami_id
   key_name                    = aws_key_pair.udemy_tf_ssh.key_name
   subnet_id                   = data.terraform_remote_state.vpc.outputs.subnet_id
