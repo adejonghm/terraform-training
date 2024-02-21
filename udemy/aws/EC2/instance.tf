@@ -7,7 +7,7 @@ December 2, 2023
 
 resource "aws_key_pair" "udemy_tf_ssh" {
   key_name   = "udemy_tf_ssh_key"
-  public_key = file("~/.ssh/id_ed25519.pub")
+  public_key = file("~/.ssh/id_rsa.pub")
 }
 
 resource "aws_instance" "udemy_tf" {
