@@ -18,4 +18,4 @@ apt-get update
 
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-docker container run -dt --name nginx nginx:1.23.4-alpine
+docker container run -dt --name nginx nginx:1.25.4-alpine
