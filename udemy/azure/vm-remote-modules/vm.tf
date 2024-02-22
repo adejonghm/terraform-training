@@ -2,19 +2,19 @@
 Developed by adejonghm
 ----------
 
-February 20, 2024
+December 3, 2023
 */
 
 
 resource "azurerm_resource_group" "terraform_tf_vm" {
-  name     = var.rg_name
+  name     = "rg-vm-${var.environment}"
   location = var.location
 
   tags = local.commong_tags
 }
 
 resource "azurerm_public_ip" "udemy_tf_pub_ip" {
-  name                = var.public_ip_name
+  name                = "vm-public-ip-${var.environment}"
   location            = var.location
   allocation_method   = var.allocation_method
   resource_group_name = azurerm_resource_group.terraform_tf_vm.name
@@ -23,13 +23,13 @@ resource "azurerm_public_ip" "udemy_tf_pub_ip" {
 }
 
 resource "azurerm_network_interface" "udemy_tf_net_interface" {
-  name                = var.network_interface_name
+  name                = "vm-net-interface-${var.environment}"
   location            = var.location
   resource_group_name = azurerm_resource_group.terraform_tf_vm.name
 
   ip_configuration {
-    name                          = var.network_interface_name
-    subnet_id                     = data.terraform_remote_state.vnet.outputs.subnet_id
+    name                          = "vm-public-ip-${var.environment}"
+    subnet_id                     = module.network.vnet_subnets[0]
     public_ip_address_id          = azurerm_public_ip.udemy_tf_pub_ip.id
     private_ip_address_allocation = "Dynamic"
   }
@@ -39,17 +39,23 @@ resource "azurerm_network_interface" "udemy_tf_net_interface" {
 
 resource "azurerm_network_interface_security_group_association" "udemy_tf_nisga" {
   network_interface_id      = azurerm_network_interface.udemy_tf_net_interface.id
-  network_security_group_id = data.terraform_remote_state.vnet.outputs.security_group_id
+  network_security_group_id = azurerm_network_security_group.udemy_tf.id
 }
 
 resource "azurerm_linux_virtual_machine" "udemy_tf_vm" {
-  name                  = var.linux_vm_name
-  size                  = var.linux_vm_size
-  location              = var.location
-  admin_username        = var.linux_vm_user
-  resource_group_name   = azurerm_resource_group.terraform_tf_vm.name
-  network_interface_ids = [azurerm_network_interface.udemy_tf_net_interface.id]
-  custom_data           = base64encode(file("./docs/docker.sh"))
+  name                = "UdemyVm-${var.environment}"
+  size                = var.linux_vm_size
+  location            = var.location
+  admin_username      = var.linux_vm_user
+  resource_group_name = azurerm_resource_group.terraform_tf_vm.name
+
+  network_interface_ids = [
+    azurerm_network_interface.udemy_tf_net_interface.id
+  ]
+
+  depends_on = [
+    azurerm_network_interface_security_group_association.udemy_tf_nisga
+  ]
 
   admin_ssh_key {
     username   = var.linux_vm_user

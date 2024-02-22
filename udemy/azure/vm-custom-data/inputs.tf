@@ -2,8 +2,9 @@
 Developed by adejonghm
 ----------
 
-December 3, 2023
+February 20, 2024
 */
+
 
 variable "location" {
   type        = string

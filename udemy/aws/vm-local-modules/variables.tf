@@ -38,6 +38,6 @@ variable "cidr_subnet" {
 
 variable "environment" {
   type        = string
-  default     = "env_modules"
+  default     = "env_local_modules"
   description = "Variable from the network module"
 }
