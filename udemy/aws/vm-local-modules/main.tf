@@ -2,7 +2,7 @@
 Developed by adejonghm
 ----------
 
-February 20, 2024
+February 22, 2024
 */
 
 
@@ -17,8 +17,8 @@ terraform {
   }
 
   backend "s3" {
-    key    = "udemy-ec2-with-docker/terraform.tfstate" # name and path of the tfstate file
-    bucket = "tfstateudemy30183408"                    # name of the bucket
+    key    = "udemy-ec2-local-modules/terraform.tfstate" # name and path of the tfstate file
+    bucket = "tfstateudemy30183408"                      # name of the bucket
     region = "us-east-1"
   }
 }
@@ -35,11 +35,11 @@ provider "aws" {
   }
 }
 
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-  config = {
-    key    = "udemy-vpc/terraform.tfstate"
-    bucket = "tfstateudemy30183408"
-    region = var.region
-  }
+module "network" {
+  source = "./network"
+
+  # Attributes
+  cidr_vpc    = var.cidr_vpc
+  cidr_subnet = var.cidr_subnet
+  environment = var.environment
 }
