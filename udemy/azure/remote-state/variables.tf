@@ -11,18 +11,6 @@ variable "location" {
   description = "Azure location that I'm using"
 }
 
-variable "account-tier" {
-  type        = string
-  default     = "Standard"
-  description = "The storage account tier"
-}
-
-variable "account-replication-type" {
-  type        = string
-  default     = "LRS"
-  description = "The storage account data replication type"
-}
-
 variable "rg-name" {
   type        = string
   default     = "RgUdTfstate"
@@ -33,6 +21,18 @@ variable "storage-account-name" {
   type        = string
   default     = "saudtfstate"
   description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
+}
+
+variable "account-tier" {
+  type        = string
+  default     = "Standard"
+  description = "The storage account tier"
+}
+
+variable "account-replication-type" {
+  type        = string
+  default     = "LRS"
+  description = "The storage account data replication type"
 }
 
 variable "storage-acc-container-name" {
