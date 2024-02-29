@@ -2,6 +2,8 @@
 Developed by adejonghm
 ----------
 
+Create a storage account to use as a remote state
+
 November 23, 2023
 */
 

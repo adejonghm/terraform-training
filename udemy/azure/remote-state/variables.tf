@@ -25,13 +25,13 @@ variable "account-replication-type" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgUdyTfstate"
+  default     = "RgUdTfstate"
   description = "Resource Group name for Remote State"
 }
 
 variable "storage-account-name" {
   type        = string
-  default     = "saudytfstate30183408"
+  default     = "saudtfstate"
   description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
 }
 
