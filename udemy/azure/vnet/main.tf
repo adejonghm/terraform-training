@@ -2,7 +2,7 @@
 Developed by adejonghm
 ----------
 
-Feb 29, 2024
+Mar 1, 2024
 */
 
 terraform {
@@ -15,10 +15,10 @@ terraform {
   }
 
   backend "azurerm" {
+    key                  = "udemo-vnet/terraform.tfstate"
+    container_name       = "remote-state"
     resource_group_name  = "RgUdTfstate"
     storage_account_name = "saudtfstate"
-    container_name       = "remote-state"
-    key                  = "udemo-vm-all-in-one/terraform.tfstate"
   }
 }
 
