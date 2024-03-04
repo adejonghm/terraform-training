@@ -27,6 +27,18 @@ provider "azurerm" {
   features {}
 }
 
-# module "name" {
+module "remote-network" {
+  source                  = "Azure/network/azurerm"
+  version                 = "5.3.0"
+  resource_group_name     = azurerm_resource_group.rg-vm-remote-mod.name
+  resource_group_location = azurerm_resource_group.rg-vm-remote-mod.location
 
-# }
+  use_for_each = true
+  vnet_name    = "VnetVm${var.domain}"
+
+  subnet_names = [
+    "Subnet-A-${var.domain}"
+  ]
+
+  tags = local.commong_tags
+}

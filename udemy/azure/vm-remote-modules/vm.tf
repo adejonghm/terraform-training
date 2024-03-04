@@ -28,12 +28,17 @@ resource "azurerm_network_interface" "nic-vm-remote-mod" {
 
   ip_configuration {
     name                          = var.net-interface-name
-    subnet_id                     = ""
+    subnet_id                     = module.remote-network.vnet_subnets[0]
     public_ip_address_id          = azurerm_public_ip.pubblic-ip-vm-remote-mod.id
     private_ip_address_allocation = var.private-ip-allocation-method
   }
 
   tags = local.commong_tags
+}
+
+resource "azurerm_network_interface_security_group_association" "nic-with-nsg" {
+  network_interface_id      = azurerm_network_interface.nic-vm-remote-mod.id
+  network_security_group_id = azurerm_network_security_group.nsg-vm-remote-mod.id
 }
 
 resource "azurerm_linux_virtual_machine" "vm-remote-mod" {
@@ -66,3 +71,4 @@ resource "azurerm_linux_virtual_machine" "vm-remote-mod" {
 
   tags = local.commong_tags
 }
+

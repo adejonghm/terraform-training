@@ -94,3 +94,15 @@ variable "public-ip-allocation-method" {
   default     = "Dynamic"
   type        = string
 }
+
+variable "domain" {
+  description = "All resources used inside remote-module"
+  default     = "RemoteModule"
+  type        = string
+}
+
+variable "nsg-name" {
+  description = "Network Secutity Group used in the Remote Module"
+  default     = "NsgVnetRemoteModule"
+  type        = string
+}
