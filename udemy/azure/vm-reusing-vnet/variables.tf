@@ -13,25 +13,25 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgVmReusingVnet"
+  default     = "RgUdVmReusingVnet"
   description = "Resource group used to create an all-in-one Virtual Machine"
 }
 
 variable "net-interface-name" {
   type        = string
-  default     = "NiVmReusingVnet"
+  default     = "NicUdVmReusingVnet"
   description = "Network Interface used to create an all-in-one Virtual Machine"
 }
 
 variable "public-ip-name" {
   type        = string
-  default     = "PublicIpVmReusingVnet"
+  default     = "PiUdVmReusingVnet"
   description = "Public IP for the all-in-one Virtual Machine"
 }
 
 variable "vm-name" {
   type        = string
-  default     = "VmReusingVnet"
+  default     = "UdVmReusingVnet"
   description = "Name of the All-in-One Virtual Machine"
 }
 

@@ -13,25 +13,25 @@ variable "location" {
 
 variable "rg-name" {
   description = "Resource group used to create an all-in-one Virtual Machine"
-  default     = "RgVmRemoteModule"
+  default     = "RgUdVmRemoteModule"
   type        = string
 }
 
 variable "net-interface-name" {
   description = "Network Interface used to create an all-in-one Virtual Machine"
-  default     = "NiVmRemoteModule"
+  default     = "NicUdVmRemoteModule"
   type        = string
 }
 
 variable "public-ip-name" {
   description = "Public IP for the all-in-one Virtual Machine"
-  default     = "PublicIpVmRemoteModule"
+  default     = "PiUdVmRemoteModule"
   type        = string
 }
 
 variable "vm-name" {
   description = "Name of the All-in-One Virtual Machine"
-  default     = "VmRemoteModule"
+  default     = "UdVmRemoteModule"
   type        = string
 }
 

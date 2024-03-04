@@ -13,19 +13,19 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgVnetUd"
+  default     = "RgUdVnet"
   description = "Resource group used to create a Virtual Network"
 }
 
 variable "nsg-name" {
   type        = string
-  default     = "NsgVnetUd"
+  default     = "NsgUdVnet"
   description = "Network Sec. Group used to create a Virtual Network"
 }
 
 variable "vnet-name" {
   type        = string
-  default     = "VnetUd"
+  default     = "UdVnet"
   description = "Virtual Network created to be used by other Virtual Machines"
 }
 

@@ -34,7 +34,7 @@ module "remote-network" {
   resource_group_location = azurerm_resource_group.rg-vm-remote-mod.location
 
   use_for_each = true
-  vnet_name    = "VnetVm${var.domain}"
+  vnet_name    = "UdVnetVm${var.domain}"
 
   subnet_names = [
     "Subnet-A-${var.domain}"

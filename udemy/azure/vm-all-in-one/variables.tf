@@ -13,19 +13,19 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgVmAllInOne"
+  default     = "RgUdVmAllInOne"
   description = "Resource group used to create an all-in-one Virtual Machine"
 }
 
 variable "nsg-name" {
   type        = string
-  default     = "NsgVmAllInOne"
+  default     = "NsgUdVmAllInOne"
   description = "Network Sec. Group used to create an all-in-one Virtual Machine"
 }
 
 variable "vnet-name" {
   type        = string
-  default     = "VnetVmAllInOne"
+  default     = "VnetUdVmAllInOne"
   description = "Virtual Network used to create an all-in-one Virtual Machine"
 }
 
@@ -49,19 +49,19 @@ variable "subnet-address-prefixes" {
 
 variable "net-interface-name" {
   type        = string
-  default     = "NiVmAllInOne"
+  default     = "NicUdVmAllInOne"
   description = "Network Interface used to create an all-in-one Virtual Machine"
 }
 
 variable "public-ip-name" {
   type        = string
-  default     = "PublicIpVmAllInOne"
+  default     = "PiUdVmAllInOne"
   description = "Public IP for the all-in-one Virtual Machine"
 }
 
 variable "vm-name" {
   type        = string
-  default     = "VmAllInOne"
+  default     = "UdVmAllInOne"
   description = "Name of the All-in-One Virtual Machine"
 }
 
