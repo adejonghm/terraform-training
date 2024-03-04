@@ -11,7 +11,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0.0"
+      version = ">= 3.0.0"
     }
   }
 
@@ -29,7 +29,7 @@ provider "azurerm" {
 
 module "remote-network" {
   source                  = "Azure/network/azurerm"
-  version                 = "5.3.0"
+  version                 = ">=5.0.0"
   resource_group_name     = azurerm_resource_group.rg-vm-remote-mod.name
   resource_group_location = azurerm_resource_group.rg-vm-remote-mod.location
 
