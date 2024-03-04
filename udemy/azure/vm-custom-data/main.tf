@@ -30,7 +30,7 @@ provider "azurerm" {
 data "terraform_remote_state" "vnet" {
   backend = "azurerm"
   config = {
-    key                  = "udemo-vm-custom-data/terraform.tfstate"
+    key                  = "udemo-vnet/terraform.tfstate"
     container_name       = "remote-state"
     resource_group_name  = "RgUdTfstate"
     storage_account_name = "saudtfstate"
