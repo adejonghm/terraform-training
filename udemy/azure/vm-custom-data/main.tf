@@ -2,9 +2,8 @@
 Developed by adejonghm
 ----------
 
-February 20, 2024
+March 4, 2024
 */
-
 
 terraform {
   required_version = ">= 1.5.0"
@@ -12,15 +11,15 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.82.0"
+      version = "~> 3.0.0"
     }
   }
 
   backend "azurerm" {
-    key                  = "udemy-vm-with-docker/30183408.tfstate" # Name and path of the tfstate.
+    key                  = "udemo-vm-custom-data/terraform.tfstate"
     container_name       = "remote-state"
-    resource_group_name  = "TerraformRootRG"      # Resource group's name where tfstate is deployed.
-    storage_account_name = "tfstateudemy30183408" # Storage Account's name where tfstate is deployed.
+    resource_group_name  = "RgUdTfstate"
+    storage_account_name = "saudtfstate"
   }
 }
 
@@ -31,9 +30,9 @@ provider "azurerm" {
 data "terraform_remote_state" "vnet" {
   backend = "azurerm"
   config = {
-    key                  = "udemy-vnet/30183408.tfstate"
+    key                  = "udemo-vm-custom-data/terraform.tfstate"
     container_name       = "remote-state"
-    resource_group_name  = "TerraformRootRG"
-    storage_account_name = "tfstateudemy30183408"
+    resource_group_name  = "RgUdTfstate"
+    storage_account_name = "saudtfstate"
   }
 }

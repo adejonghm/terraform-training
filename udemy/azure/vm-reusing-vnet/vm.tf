@@ -28,7 +28,7 @@ resource "azurerm_network_interface" "nic-vm" {
 
   ip_configuration {
     name                          = var.net-interface-name
-    subnet_id                     = data.terraform_remote_state.vnet.outputs.subnet_id[0]
+    subnet_id                     = data.terraform_remote_state.vnet.outputs.subnet-id[0]
     public_ip_address_id          = azurerm_public_ip.public-ip-vm.id
     private_ip_address_allocation = var.private-ip-allocation-method
   }
@@ -38,7 +38,7 @@ resource "azurerm_network_interface" "nic-vm" {
 
 resource "azurerm_network_interface_security_group_association" "nic-with-nsg" {
   network_interface_id      = azurerm_network_interface.nic-vm.id
-  network_security_group_id = data.terraform_remote_state.vnet.outputs.nsg_id
+  network_security_group_id = data.terraform_remote_state.vnet.outputs.nsg-id
 }
 
 resource "azurerm_linux_virtual_machine" "vm-resusing-vnet" {
@@ -65,4 +65,6 @@ resource "azurerm_linux_virtual_machine" "vm-resusing-vnet" {
     sku       = var.vm-image-sku
     version   = var.vm-image-version
   }
+
+  tags = local.commong_tags
 }

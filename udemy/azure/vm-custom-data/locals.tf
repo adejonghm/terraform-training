@@ -2,13 +2,13 @@
 Developed by adejonghm
 ----------
 
-February 20, 2024
+March 4, 2024
 */
-
 
 locals {
   commong_tags = {
-    owner      = "adejonghm"
-    managed-by = "terraform"
+    owner       = "adejonghm"
+    managed-by  = "terraform"
+    environment = "UdyDemo"
   }
 }
