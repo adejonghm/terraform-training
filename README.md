@@ -1,9 +1,14 @@
-# HashiCorp Official Get Started Paths
+# Terraform Training Path
 
-In this repository, you will find the practical labs proposed by the HashiCorp Get Started training paths. For all the labs, the playgrounds available on the [A Cloud Guru Platform](https://acloudguru.com/) were used, but the exercises are focused on using the free resources available in each of the providers used in the exercises.
+In this repository, you will find a series of practical laboratories I developed throughout the [Terraform - Do Básico ao Avançado](https://www.udemy.com/course/terraform-do-basico-ao-avancado) course to learn how to use the terraform with Azure and AWS providers. All labs were deployed using my account from both providers. To avoid high costs, at the end of each laboratory, it is recommended to destroy the infrastructure that was created, in this way, you will be able to reproduce each of the laboratories without having to pay anything.
 
-There are also other hands-on that are not part of HashiCorp's Get Started Path but help you to deepen some other contents not covered in official training.
+There are also other hands-on that are part of HashiCorp's Get Started Training Paths that you can find in the branch `hashicorp`.
 
-## Contact Me
+<br/>
 
-[LinkedIn](https://www.linkedin.com/in/adejonghm/) | [eMail](mailto:dejongh.morell@gmail.com) | [Telegram](https://t.me/adejonghm)
+<div align="center">
+
+  [![linkedin](https://img.shields.io/badge/LinkedIn-1D5D9B?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adejonghm)
+  [![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/816104924924084247)
+
+</div>
