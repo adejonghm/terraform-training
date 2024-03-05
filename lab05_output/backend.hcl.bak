@@ -1,0 +1,4 @@
+bucket  = "tf-state-file-965699425769"
+key     = "terraform/lab05/network.tfstate"
+region  = "us-east-1"
+profile = "tf-acn-treinamento"
