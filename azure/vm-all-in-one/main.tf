@@ -15,8 +15,8 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "RgUdTfstate"
-    storage_account_name = "saudtfstate"
+    resource_group_name  = "rgudmtfstates"
+    storage_account_name = "studmtfstates"
     container_name       = "remote-state"
     key                  = "udemo-vm-all-in-one/terraform.tfstate"
   }

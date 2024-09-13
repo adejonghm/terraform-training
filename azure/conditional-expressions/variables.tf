@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 May 8, 2024
 */
 

@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 Mar 1, 2024
 */
 
@@ -13,19 +17,19 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgUdVnet"
+  default     = "rgudmtfvnet"
   description = "Resource group used to create a Virtual Network"
 }
 
 variable "nsg-name" {
   type        = string
-  default     = "NsgUdVnet"
+  default     = "nsgudmtfvnet"
   description = "Network Sec. Group used to create a Virtual Network"
 }
 
 variable "vnet-name" {
   type        = string
-  default     = "UdVnet"
+  default     = "vnetudmtf"
   description = "Virtual Network created to be used by other Virtual Machines"
 }
 
@@ -37,7 +41,7 @@ variable "vnet-address-space" {
 
 variable "subnet-name" {
   type        = string
-  default     = "Subnet-A"
+  default     = "snetudmtf-a"
   description = "Subnet for the VNet created to be used by other Virtual Machines"
 }
 

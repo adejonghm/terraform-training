@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 November 23, 2023
 */
 
@@ -13,13 +17,13 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgUdTfstate"
+  default     = "rgudmtfstates"
   description = "Resource Group name for Remote State"
 }
 
 variable "storage-account-name" {
   type        = string
-  default     = "saudtfstate"
+  default     = "studmtfstates"
   description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
 }
 

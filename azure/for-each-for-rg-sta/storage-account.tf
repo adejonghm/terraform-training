@@ -8,7 +8,7 @@ May 12, 2024
 resource "azurerm_resource_group" "rg-for-each" {
   for_each = var.location
 
-  name     = "rgudm${each.key}foreachlab"
+  name     = "rgudmtf${each.key}foreachlab"
   location = each.value
 
   tags = local.commong_tags
@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg-for-each" {
 resource "azurerm_storage_account" "sa-for-each" {
   for_each = azurerm_resource_group.rg-for-each
 
-  name                     = "saudm${each.key}foreachlab"
+  name                     = "studmtf${each.key}foreachlab"
   location                 = each.value.location
   account_tier             = var.account_tier
   resource_group_name      = each.value.name

@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 Feb 29, 2024
 */
 
@@ -13,19 +17,19 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgUdVmAllInOne"
+  default     = "rgudmtfvmallinone"
   description = "Resource group used to create an all-in-one Virtual Machine"
 }
 
 variable "nsg-name" {
   type        = string
-  default     = "NsgUdVmAllInOne"
+  default     = "nsgudmtfvmallinone"
   description = "Network Sec. Group used to create an all-in-one Virtual Machine"
 }
 
 variable "vnet-name" {
   type        = string
-  default     = "VnetUdVmAllInOne"
+  default     = "vnetudmtfvmallinone"
   description = "Virtual Network used to create an all-in-one Virtual Machine"
 }
 
@@ -37,7 +41,7 @@ variable "vnet-address-space" {
 
 variable "subnet-name" {
   type        = string
-  default     = "Subnet-A"
+  default     = "snetudmtf-a"
   description = "Subnet for the VNet used to create an all-in-one Virtual Machine"
 }
 
@@ -49,19 +53,19 @@ variable "subnet-address-prefixes" {
 
 variable "net-interface-name" {
   type        = string
-  default     = "NicUdVmAllInOne"
+  default     = "nicudmtfvmallinone"
   description = "Network Interface used to create an all-in-one Virtual Machine"
 }
 
 variable "public-ip-name" {
   type        = string
-  default     = "PiUdVmAllInOne"
+  default     = "piudmtfvmallinone"
   description = "Public IP for the all-in-one Virtual Machine"
 }
 
 variable "vm-name" {
   type        = string
-  default     = "UdVmAllInOne"
+  default     = "vmudmtfallinone"
   description = "Name of the All-in-One Virtual Machine"
 }
 

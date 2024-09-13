@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 March 4, 2024
 */
 
@@ -13,25 +17,25 @@ variable "location" {
 
 variable "rg-name" {
   description = "Resource group used to create an all-in-one Virtual Machine"
-  default     = "RgUdVmRemoteModule"
+  default     = "rgudmtfvmremotemodule"
   type        = string
 }
 
 variable "net-interface-name" {
   description = "Network Interface used to create an all-in-one Virtual Machine"
-  default     = "NicUdVmRemoteModule"
+  default     = "nicudmtfvmremotemodule"
   type        = string
 }
 
 variable "public-ip-name" {
   description = "Public IP for the all-in-one Virtual Machine"
-  default     = "PiUdVmRemoteModule"
+  default     = "piudmtfvmremotemodule"
   type        = string
 }
 
 variable "vm-name" {
   description = "Name of the All-in-One Virtual Machine"
-  default     = "UdVmRemoteModule"
+  default     = "vmudmtfremotemodule"
   type        = string
 }
 
@@ -97,12 +101,12 @@ variable "public-ip-allocation-method" {
 
 variable "domain" {
   description = "All resources used inside remote-module"
-  default     = "RemoteModule"
+  default     = "remotemodule"
   type        = string
 }
 
 variable "nsg-name" {
   description = "Network Secutity Group used in the Remote Module"
-  default     = "NsgVnetRemoteModule"
+  default     = "nsgudmtfvmremotemodule"
   type        = string
 }

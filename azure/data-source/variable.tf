@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 June 20, 2024
 */
 
@@ -14,7 +18,7 @@ variable "location" {
 variable "rg_name" {
   description = "Resource Group used in Data Source Lab"
   type        = string
-  default     = "rgudemodatasourcelab"
+  default     = "rgudmtfdatasourcelab"
 }
 
 variable "start_date" {
@@ -33,7 +37,7 @@ variable "expiry_date" {
 variable "st_name" {
   description = "The name of the Strage Account used in Data Source Lab"
   type        = string
-  default     = "studemodataforimages"
+  default     = "studmtfdataforimages"
 }
 
 variable "st_tier" {

@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 March 2, 2024
 */
 
@@ -13,25 +17,25 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "RgUdVmReusingVnet"
+  default     = "rgudmtfvmreusingvnet"
   description = "Resource group used to create an all-in-one Virtual Machine"
 }
 
 variable "net-interface-name" {
   type        = string
-  default     = "NicUdVmReusingVnet"
+  default     = "nicudmtfvmreusingvnet"
   description = "Network Interface used to create an all-in-one Virtual Machine"
 }
 
 variable "public-ip-name" {
   type        = string
-  default     = "PiUdVmReusingVnet"
+  default     = "piudmtfvmreusingvnet"
   description = "Public IP for the all-in-one Virtual Machine"
 }
 
 variable "vm-name" {
   type        = string
-  default     = "UdVmReusingVnet"
+  default     = "vmudmtfreusingvnet"
   description = "Name of the All-in-One Virtual Machine"
 }
 

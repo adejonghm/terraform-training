@@ -17,8 +17,8 @@ terraform {
   backend "azurerm" {
     key                  = "udemo-vm-reusing-vnet/terraform.tfstate"
     container_name       = "remote-state"
-    resource_group_name  = "RgUdTfstate"
-    storage_account_name = "saudtfstate"
+    resource_group_name  = "rgudmtfstates"
+    storage_account_name = "studmtfstates"
   }
 }
 
@@ -32,7 +32,7 @@ data "terraform_remote_state" "vnet" {
   config = {
     key                  = "udemo-vnet/terraform.tfstate"
     container_name       = "remote-state"
-    resource_group_name  = "RgUdTfstate"
-    storage_account_name = "saudtfstate"
+    resource_group_name  = "rgudmtfstates"
+    storage_account_name = "studmtfstates"
   }
 }

@@ -2,6 +2,10 @@
 Developed by adejonghm
 ----------
 
+Naming Convention:
+  [resource-abbreviation][platform-course][module]
+  [rg][udmtf][<module-name>]
+
 March 5, 2024
 */
 
@@ -13,13 +17,13 @@ variable "location" {
 
 variable "rg-name" {
   description = "Resource group used to create an all-in-one Virtual Machine"
-  default     = "RgUdVm"
+  default     = "rgudmtfvmlocalmod"
   type        = string
 }
 
 variable "public-ip-name" {
   description = "Public IP for the all-in-one Virtual Machine"
-  default     = "PiUdVm"
+  default     = "piudmtfvmlocalmod"
   type        = string
 }
 
@@ -31,7 +35,7 @@ variable "public-ip-allocation-method" {
 
 variable "net-interface-name" {
   description = "Network Interface used to create an all-in-one Virtual Machine"
-  default     = "NicUdVm"
+  default     = "nicudmtfvmlocalmod"
   type        = string
 }
 
@@ -43,7 +47,7 @@ variable "private-ip-allocation-method" {
 
 variable "vm-name" {
   description = "Name of the All-in-One Virtual Machine"
-  default     = "UdVm"
+  default     = "vmudmtflocalmod"
   type        = string
 }
 
