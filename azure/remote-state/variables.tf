@@ -11,7 +11,7 @@ November 23, 2023
 
 variable "location" {
   type        = string
-  default     = "East US 2"
+  default     = "Brazil South"
   description = "Azure location that I'm using"
 }
 
