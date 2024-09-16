@@ -11,7 +11,7 @@ Mar 1, 2024
 
 variable "location" {
   type        = string
-  default     = "East US 2"
+  default     = "Brazil South"
   description = "Azure Region used in the Terraform training"
 }
 
@@ -46,7 +46,7 @@ variable "subnet-name" {
 }
 
 variable "subnet-address-prefixes" {
-  type        = string
-  default     = "10.0.0.0/24"
+  type        = list(string)
+  default     = ["10.0.0.0/24"]
   description = "Vnet's subnet address-prefix created to be used by other Virtual Machines"
 }

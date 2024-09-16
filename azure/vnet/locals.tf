@@ -9,6 +9,6 @@ locals {
   commong_tags = {
     owner       = "adejonghm"
     managed-by  = "terraform"
-    environment = "udmtftraining"
+    environment = "udemy-course"
   }
 }

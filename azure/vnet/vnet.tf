@@ -41,9 +41,9 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg-vnet.name
 
   subnet {
-    name           = var.subnet-name
-    security_group = azurerm_network_security_group.nsg-vnet.id
-    address_prefix = var.subnet-address-prefixes
+    name             = var.subnet-name
+    security_group   = azurerm_network_security_group.nsg-vnet.id
+    address_prefixes = var.subnet-address-prefixes
   }
 
   tags = local.commong_tags
