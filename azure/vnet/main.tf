@@ -18,7 +18,7 @@ terraform {
     resource_group_name  = "rgudmtfstates"
     storage_account_name = "studmtfstates"
     container_name       = "remote-state"
-    key                  = "udemo-vnet/terraform.tfstate"
+    key                  = "udmtf-vnet/terraform.tfstate"
   }
 }
 
