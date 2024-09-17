@@ -16,23 +16,23 @@ resource "azurerm_resource_group" "rg-vm" {
 
 resource "azurerm_virtual_network" "vnet-vm" {
   name                = var.vnet-name
-  location            = var.location
+  location            = azurerm_resource_group.rg-vm.location
+  address_space       = var.vnet-address-space
   resource_group_name = azurerm_resource_group.rg-vm.name
-  address_space       = [var.vnet-address-space]
 
   tags = local.commong_tags
 }
 
 resource "azurerm_subnet" "subnet-a" {
   name                 = var.subnet-name
+  address_prefixes     = var.subnet-address-prefixes
   resource_group_name  = azurerm_resource_group.rg-vm.name
   virtual_network_name = azurerm_virtual_network.vnet-vm.name
-  address_prefixes     = [var.subnet-address-prefixes]
 }
 
 resource "azurerm_network_security_group" "nsg-vm" {
   name                = var.nsg-name
-  location            = var.location
+  location            = azurerm_resource_group.rg-vm.location
   resource_group_name = azurerm_resource_group.rg-vm.name
 
   security_rule {
@@ -56,8 +56,9 @@ resource "azurerm_subnet_network_security_group_association" "nsg-association" {
 }
 
 resource "azurerm_public_ip" "pubblic-ip-vm" {
+  sku                 = var.public-ip-sku
   name                = var.public-ip-name
-  location            = var.location
+  location            = azurerm_resource_group.rg-vm.location
   allocation_method   = var.public-ip-allocation-method
   resource_group_name = azurerm_resource_group.rg-vm.name
 
@@ -66,7 +67,7 @@ resource "azurerm_public_ip" "pubblic-ip-vm" {
 
 resource "azurerm_network_interface" "nic-vm" {
   name                = var.net-interface-name
-  location            = var.location
+  location            = azurerm_resource_group.rg-vm.location
   resource_group_name = azurerm_resource_group.rg-vm.name
 
   ip_configuration {
@@ -82,7 +83,7 @@ resource "azurerm_network_interface" "nic-vm" {
 resource "azurerm_linux_virtual_machine" "virtual-machine" {
   name                  = var.vm-name
   size                  = var.vm-size
-  location              = var.location
+  location              = azurerm_resource_group.rg-vm.location
   admin_username        = var.vm-username
   resource_group_name   = azurerm_resource_group.rg-vm.name
   network_interface_ids = [azurerm_network_interface.nic-vm.id]

@@ -18,10 +18,11 @@ terraform {
     resource_group_name  = "rgudmtfstates"
     storage_account_name = "studmtfstates"
     container_name       = "remote-state"
-    key                  = "udemo-vm-all-in-one/terraform.tfstate"
+    key                  = "udmtf-vm-all-in-one/terraform.tfstate"
   }
 }
 
 provider "azurerm" {
+  subscription_id = "bcea779c-0cef-4ed4-a8bf-9b246e0544e8"
   features {}
 }
