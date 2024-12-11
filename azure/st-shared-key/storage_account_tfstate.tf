@@ -22,6 +22,10 @@ resource "azurerm_storage_account" "sa-ud-tfstates" {
   account_tier             = var.account-tier
   resource_group_name      = azurerm_resource_group.rg-tfstate.name
   account_replication_type = var.account-replication-type
+
+  # public_network_access_enabled = false
+  # shared_access_key_enabled = false
+
   blob_properties {
     versioning_enabled = true
   }
