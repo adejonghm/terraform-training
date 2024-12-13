@@ -9,6 +9,11 @@ Naming Convention:
 November 23, 2023
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   type        = string
   default     = "Brazil South"

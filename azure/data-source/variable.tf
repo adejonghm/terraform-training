@@ -9,6 +9,11 @@ Naming Convention:
 June 20, 2024
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   description = "Azure location that I'm using"
   type        = string

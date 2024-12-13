@@ -9,6 +9,11 @@ Naming Convention:
 may 12, 2024
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   type = map(string)
   default = {

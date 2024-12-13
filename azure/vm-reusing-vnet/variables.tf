@@ -9,6 +9,11 @@ Naming Convention:
 March 2, 2024
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   type        = string
   default     = "East US 2"

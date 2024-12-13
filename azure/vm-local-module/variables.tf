@@ -9,6 +9,11 @@ Naming Convention:
 March 5, 2024
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   description = "Azure Region used in the Terraform training"
   default     = "East US 2"
