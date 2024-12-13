@@ -26,7 +26,7 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id     = "bcea779c-0cef-4ed4-a8bf-9b246e0544e8"
-  storage_use_azuread = true
+  subscription_id     = var.my-subscription-id
+  storage_use_azuread = var.use-azure-ad
   features {}
 }

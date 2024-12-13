@@ -7,6 +7,11 @@ Create a storage account without Shared Key Access and SAS Token
 December 11, 2024
 */
 
+variable "my-subscription-id" {
+  type        = string
+  description = "ID of the Subscription that I use"
+}
+
 variable "location" {
   type        = string
   default     = "Brazil South"
@@ -46,5 +51,11 @@ variable "st-container-name" {
 variable "access-key-enabled" {
   type        = string
   default     = false
-  description = "This variable disables the Shared Key Access from the Storage Account"
+  description = "Disabling the Shared Key Access from the Storage Account"
+}
+
+variable "use-azure-ad" {
+  type        = string
+  default     = true
+  description = "Enabling use of Entra ID to connect into the Storage Account"
 }
