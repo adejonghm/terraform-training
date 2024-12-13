@@ -2,11 +2,9 @@
 Developed by adejonghm
 ----------
 
-Naming Convention:
-  [resource-abbreviation][platform-course][module]
-  [rg][udmtf][<module-name>]
+Create a storage account without Shared Key Access and SAS Token
 
-November 23, 2023
+December 11, 2024
 */
 
 variable "location" {
@@ -17,13 +15,13 @@ variable "location" {
 
 variable "rg-name" {
   type        = string
-  default     = "rgudmtfstates"
+  default     = "rglabs"
   description = "Resource Group name for Remote State"
 }
 
 variable "storage-account-name" {
   type        = string
-  default     = "studmtfstates"
+  default     = "stlabswosharedkey"
   description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
 }
 
@@ -39,8 +37,14 @@ variable "account-replication-type" {
   description = "The storage account data replication type"
 }
 
-variable "storage-acc-container-name" {
+variable "st-container-name" {
   type        = string
-  default     = "remote-state"
+  default     = "blobwithoutsharedkey"
   description = "The container name within the storage account"
+}
+
+variable "access-key-enabled" {
+  type        = string
+  default     = false
+  description = "This variable disables the Shared Key Access from the Storage Account"
 }

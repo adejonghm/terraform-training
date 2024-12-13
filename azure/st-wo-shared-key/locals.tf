@@ -2,7 +2,9 @@
 Developed by adejonghm
 ----------
 
-November 23, 2023
+Create a storage account without Shared Key Access and SAS Token
+
+December 11, 2024
 */
 
 locals {
