@@ -9,9 +9,9 @@ Naming Convention:
 November 23, 2023
 */
 
-variable "my-subscription-id" {
+variable "subscription_id" {
   type        = string
-  description = "ID of the Subscription that I use"
+  description = "The Azure subscription ID"
 }
 
 variable "location" {
@@ -20,32 +20,50 @@ variable "location" {
   description = "Azure location that I'm using"
 }
 
-variable "rg-name" {
+variable "rg_name" {
   type        = string
-  default     = "rgudmtfstates"
-  description = "Resource Group name for Remote State"
+  default     = "rgterraformstates"
+  description = "Name of the Resource Group for Remote State"
 }
 
-variable "storage-account-name" {
+variable "storage_account_name" {
   type        = string
-  default     = "studmtfstates"
-  description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
+  default     = "stazureremotetfstates"
+  description = "Name of the Azure Storage Account used for Terraform Remote State"
 }
 
-variable "account-tier" {
+variable "account_tier" {
   type        = string
   default     = "Standard"
   description = "The storage account tier"
 }
 
-variable "account-replication-type" {
+variable "account_replication_type" {
   type        = string
   default     = "LRS"
   description = "The storage account data replication type"
 }
 
-variable "storage-acc-container-name" {
+variable "storage_container_name" {
   type        = string
-  default     = "remote-state"
+  default     = "blobremotestates"
   description = "The container name within the storage account"
+}
+
+variable "network_access_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to enable network access to the storage account"
+}
+
+variable "blobs_to_be_public" {
+  type        = bool
+  default     = false
+  description = "Whether to allow blobs to be public"
+}
+
+variable "hierarchical_namespace" {
+  type        = bool
+  default     = false
+  description = "Whether to enable hierarchical namespace"
 }
