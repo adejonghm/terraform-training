@@ -9,11 +9,6 @@ Naming Convention:
 November 23, 2023
 */
 
-variable "subscription_id" {
-  type        = string
-  description = "The Azure subscription ID"
-}
-
 variable "location" {
   type        = string
   default     = "Brazil South"
@@ -50,12 +45,6 @@ variable "storage_container_name" {
   description = "The container name within the storage account"
 }
 
-variable "network_access_enabled" {
-  type        = bool
-  default     = false
-  description = "Whether to enable network access to the storage account"
-}
-
 variable "blobs_to_be_public" {
   type        = bool
   default     = false
@@ -66,4 +55,15 @@ variable "hierarchical_namespace" {
   type        = bool
   default     = false
   description = "Whether to enable hierarchical namespace"
+}
+
+# Variables with values set in terraform.tfvars
+variable "subscription_id" {
+  type        = string
+  description = "The Azure subscription ID"
+}
+
+variable "ip_rules" {
+  type        = list(string)
+  description = "The IP rules for the storage account"
 }
