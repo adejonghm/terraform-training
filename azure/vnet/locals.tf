@@ -6,7 +6,7 @@ Mar 1, 2024
 */
 
 locals {
-  commong_tags = {
+  common_tags = {
     owner       = "adejonghm"
     managed-by  = "terraform"
     environment = "udemy-course"

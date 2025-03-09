@@ -7,17 +7,17 @@ Creating a Virtual Network with all resources.
 Mar 1, 2024
 */
 
-resource "azurerm_resource_group" "rg-vnet" {
-  name     = var.rg-name
+resource "azurerm_resource_group" "rgvnet" {
+  name     = var.rg_name
   location = var.location
 
-  tags = local.commong_tags
+  tags = local.common_tags
 }
 
-resource "azurerm_network_security_group" "nsg-vnet" {
-  name                = var.nsg-name
+resource "azurerm_network_security_group" "nsgvnet" {
+  name                = var.nsg_name
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg-vnet.name
+  resource_group_name = azurerm_resource_group.rgvnet.name
 
   security_rule {
     name                       = "SSH"
@@ -31,20 +31,20 @@ resource "azurerm_network_security_group" "nsg-vnet" {
     destination_address_prefix = "*"
   }
 
-  tags = local.commong_tags
+  tags = local.common_tags
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = var.vnet-name
+  name                = var.vnet_name
   location            = var.location
-  address_space       = [var.vnet-address-space]
-  resource_group_name = azurerm_resource_group.rg-vnet.name
+  address_space       = [var.vnet_address_space]
+  resource_group_name = azurerm_resource_group.rgvnet.name
 
   subnet {
-    name             = var.subnet-name
-    security_group   = azurerm_network_security_group.nsg-vnet.id
-    address_prefixes = var.subnet-address-prefixes
+    name             = var.subnet_name
+    security_group   = azurerm_network_security_group.nsgvnet.id
+    address_prefixes = var.subnet_address_prefixes
   }
 
-  tags = local.commong_tags
+  tags = local.common_tags
 }
