@@ -14,6 +14,12 @@ terraform {
       version = ">= 4.0.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "rgterraform"
+    storage_account_name = "staremotestatefiles"
+    container_name       = "blobremotestates"
+    key                  = "udm-vnet/terraform.tfstate"
+  }
 }
 
 provider "azurerm" {

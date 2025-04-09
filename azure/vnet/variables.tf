@@ -17,19 +17,19 @@ variable "location" {
 
 variable "rg_name" {
   type        = string
-  default     = "rgudmterraformvnet"
+  default     = "rgudmvnet"
   description = "Resource group used to create a Virtual Network"
 }
 
 variable "nsg_name" {
   type        = string
-  default     = "nsgudmtfvnet"
+  default     = "nsgudmvnet"
   description = "Network Sec. Group used to create a Virtual Network"
 }
 
 variable "vnet_name" {
   type        = string
-  default     = "vnetudmterraform"
+  default     = "vnetudm"
   description = "Virtual Network created to be used by other Virtual Machines"
 }
 
@@ -41,7 +41,7 @@ variable "vnet_address_space" {
 
 variable "subnet_name" {
   type        = string
-  default     = "snetudmterraform01"
+  default     = "snetudm01"
   description = "Subnet for the VNet created to be used by other Virtual Machines"
 }
 
