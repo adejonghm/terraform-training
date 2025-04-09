@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rgtfstate" {
   tags = local.common_tags
 }
 
-resource "azurerm_storage_account" "sttfstate" {
+resource "azurerm_storage_account" "statfstate" {
   name                            = var.storage_account_name
   location                        = var.location
   account_tier                    = var.account_tier
@@ -20,10 +20,6 @@ resource "azurerm_storage_account" "sttfstate" {
   account_replication_type        = var.account_replication_type
   allow_nested_items_to_be_public = var.blobs_to_be_public
   is_hns_enabled                  = var.hierarchical_namespace
-
-  blob_properties {
-    versioning_enabled = true
-  }
 
   network_rules {
     default_action = "Deny"
@@ -35,9 +31,9 @@ resource "azurerm_storage_account" "sttfstate" {
 
 resource "azurerm_storage_container" "container" {
   name               = var.storage_container_name
-  storage_account_id = azurerm_storage_account.sttfstate.id
+  storage_account_id = azurerm_storage_account.statfstate.id
 
   depends_on = [
-    azurerm_storage_account.sttfstate
+    azurerm_storage_account.statfstate
   ]
 }

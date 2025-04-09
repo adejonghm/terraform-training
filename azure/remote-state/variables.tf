@@ -17,20 +17,20 @@ variable "location" {
 
 variable "rg_name" {
   type        = string
-  default     = "rgterraformstates"
+  default     = "rgterraform"
   description = "Name of the Resource Group for Remote State"
 }
 
 variable "storage_account_name" {
   type        = string
-  default     = "stazureremotetfstates"
+  default     = "staremotestatefiles"
   description = "Name of the Azure Storage Account used for Terraform Remote State"
 }
 
 variable "account_tier" {
   type        = string
   default     = "Standard"
-  description = "The storage account tier"
+  description = "The storage account performance"
 }
 
 variable "account_replication_type" {
