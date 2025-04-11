@@ -21,10 +21,10 @@ resource "azurerm_storage_account" "statfstate" {
   allow_nested_items_to_be_public = var.blobs_to_be_public
   is_hns_enabled                  = var.hierarchical_namespace
 
-  network_rules {
-    default_action = "Deny"
-    ip_rules       = var.ip_rules
-  }
+  # network_rules {
+  #   default_action = "Deny"
+  #   ip_rules       = var.ip_rules
+  # }
 
   tags = local.common_tags
 }
