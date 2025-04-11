@@ -7,8 +7,8 @@ November 23, 2023
 
 locals {
   commong_tags = {
-    owner       = "adejonghm"
-    managed-by  = "terraform"
-    environment = "udemy-course"
+    env        = "udemy-course"
+    managed-by = "terraform"
+    owner      = "adejonghm"
   }
 }
