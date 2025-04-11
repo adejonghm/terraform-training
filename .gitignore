@@ -75,6 +75,7 @@ terraform.rc
 *.plan
 *.out
 *.tfplan
+*.txt
 
 ### Local ###
 *.pdf
