@@ -38,17 +38,14 @@ variable "vnet_address_space" {
   default     = "10.20.0.0/16"
   description = "Address space for the VNet created to be used by other Virtual Machines"
 }
-
-variable "subnet_name" {
-  type        = string
-  default     = "snetgeneralpurpose01"
-  description = "Subnet for the VNet created to be used by other Virtual Machines"
-}
-
-variable "subnet_address_prefixes" {
-  type        = list(string)
-  default     = ["10.20.1.0/24"]
-  description = "Vnet's subnet address-prefix created to be used by other Virtual Machines"
+variable "subnets" {
+  type = map(string)
+  default = {
+    snetgeneralpurpose = "10.20.1.0/24",
+    snetvmlinux        = "10.20.2.0/24",
+    snetvmwindows      = "10.20.3.0/24"
+  }
+  description = "The subnets created to be used by other Virtual Machines"
 }
 
 # Variables with values set in terraform.tfvars

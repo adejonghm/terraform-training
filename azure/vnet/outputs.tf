@@ -10,7 +10,10 @@ output "nsg-id" {
   description = "ID of the NSG used in the virtual network"
 }
 
-output "subnet-id" {
-  value       = azurerm_virtual_network.vnet.subnet.*.id
+output "subnets-id" {
+  value = {
+    for name, subnet in azurerm_subnet.subnets :
+    name => subnet.id
+  }
   description = "Subnet ID created in the Virtual Network"
 }

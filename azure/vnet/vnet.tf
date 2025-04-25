@@ -40,11 +40,13 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = [var.vnet_address_space]
   resource_group_name = azurerm_resource_group.rgvnet.name
 
-  subnet {
-    name             = var.subnet_name
-    security_group   = azurerm_network_security_group.nsgvnet.id
-    address_prefixes = var.subnet_address_prefixes
-  }
-
   tags = local.common_tags
+}
+
+resource "azurerm_subnet" "subnets" {
+  for_each             = var.subnets
+  name                 = each.key
+  resource_group_name  = azurerm_resource_group.rgvnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [each.value]
 }
