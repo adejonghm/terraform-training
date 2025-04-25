@@ -23,7 +23,7 @@ variable "rg_name" {
 
 variable "storage_account_name" {
   type        = string
-  default     = "staremotestatefiles"
+  default     = "stremotestatefiles"
   description = "Name of the Azure Storage Account used for Terraform Remote State"
 }
 
