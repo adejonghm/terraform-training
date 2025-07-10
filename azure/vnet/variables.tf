@@ -41,8 +41,7 @@ variable "vnet_address_space" {
 variable "subnets" {
   type = map(string)
   default = {
-    snetlabsloadbalancing001 = "10.20.1.0/24",
-    snetlabsloadbalancing002 = "10.20.2.0/24",
+    snetgeneralpurpose = "10.20.1.0/24"
   }
 }
 
