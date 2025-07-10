@@ -11,7 +11,7 @@ November 23, 2023
 
 variable "location" {
   type        = string
-  default     = "Brazil South"
+  default     = "South Central US"
   description = "Azure location that I'm using"
 }
 
@@ -21,27 +21,33 @@ variable "rg_name" {
   description = "Name of the Resource Group for Remote State"
 }
 
-variable "storage_account_name" {
+variable "st_name" {
   type        = string
   default     = "stremotestatefiles"
   description = "Name of the Azure Storage Account used for Terraform Remote State"
 }
 
-variable "account_tier" {
+variable "st_tier" {
   type        = string
   default     = "Standard"
   description = "The storage account performance"
 }
 
-variable "account_replication_type" {
+variable "st_kind" {
+  type        = string
+  default     = "StorageV2"
+  description = "The storage account kind"
+}
+
+variable "st_replication_type" {
   type        = string
   default     = "LRS"
   description = "The storage account data replication type"
 }
 
-variable "storage_container_name" {
+variable "container_name" {
   type        = string
-  default     = "blobremotestates"
+  default     = "terraformstates"
   description = "The container name within the storage account"
 }
 
@@ -61,9 +67,4 @@ variable "hierarchical_namespace" {
 variable "subscription_id" {
   type        = string
   description = "The Azure subscription ID"
-}
-
-variable "ip_rules" {
-  type        = list(string)
-  description = "The IP rules for the storage account"
 }
