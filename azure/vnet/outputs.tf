@@ -6,7 +6,7 @@ March 4, 2024
 */
 
 output "nsg-id" {
-  value       = azurerm_network_security_group.nsgvnet.id
+  value       = azurerm_network_security_group.nsg.id
   description = "ID of the NSG used in the virtual network"
 }
 

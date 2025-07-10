@@ -11,7 +11,7 @@ Mar 1, 2024
 
 variable "location" {
   type        = string
-  default     = "Brazil South"
+  default     = "South Central Us"
   description = "Azure Region used in the Terraform training"
 }
 
@@ -23,13 +23,13 @@ variable "rg_name" {
 
 variable "nsg_name" {
   type        = string
-  default     = "nsgvnetbrazilsouth"
+  default     = "nsgvnet"
   description = "Network Sec. Group used to create a Virtual Network"
 }
 
 variable "vnet_name" {
   type        = string
-  default     = "vnetbrazilsouth"
+  default     = "vnetgeneralpurpose"
   description = "Virtual Network created to be used by other Virtual Machines"
 }
 
@@ -41,15 +41,52 @@ variable "vnet_address_space" {
 variable "subnets" {
   type = map(string)
   default = {
-    snetgeneralpurpose = "10.20.1.0/24",
-    snetvmlinux        = "10.20.2.0/24",
-    snetvmwindows      = "10.20.3.0/24"
+    snetlabsloadbalancing001 = "10.20.1.0/24",
+    snetlabsloadbalancing002 = "10.20.2.0/24",
   }
-  description = "The subnets created to be used by other Virtual Machines"
 }
 
 # Variables with values set in terraform.tfvars
 variable "subscription_id" {
   type        = string
   description = "The Azure subscription ID"
+}
+
+variable "nsg_rules" {
+  type = list(object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_range     = string
+    source_address_prefix      = string
+    destination_address_prefix = string
+  }))
+  default = [
+    {
+      name                       = "SSH"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "22"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "RDP"
+      priority                   = 110
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "3389"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  ]
+  description = "List of security rules for the NSG"
 }
