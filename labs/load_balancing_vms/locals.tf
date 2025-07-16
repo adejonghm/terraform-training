@@ -7,7 +7,7 @@ July 9, 2025
 
 locals {
   common_tags = {
-    env        = "laboratory"
+    env        = "labs"
     project    = "load_balancing_vms"
     owner      = "adejonghm"
     managed-by = "terraform"
