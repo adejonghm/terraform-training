@@ -3,15 +3,12 @@ Developed by adejonghm
 ----------
 
 July 9, 2025
+
+NOTAS:
+ - Study about NSG.
+
 */
 
-# CREATING RESOURCES
-resource "azurerm_resource_group" "rg" {
-  name     = var.rg_name
-  location = var.location
-
-  tags = local.common_tags
-}
 
 module "vm-linux" {
   source = "./modules/vm_linux"
@@ -31,4 +28,26 @@ module "vm-linux" {
   vmlx_os_disk_type = "Standard_LRS"
   vmlx_os_sku       = "22_04-lts"
   vmlx_os_offer     = "0001-com-ubuntu-server-jammy"
+}
+
+module "finops" {
+  source = "./modules/finops"
+
+  # VARIABLES
+  owner       = "adejonghm"
+  managed_by  = "terraform"
+  environment = "sandbox"
+
+  # ADDICIONAL TAGS
+  additional_tags = {
+    project = "load_balancing_vms"
+  }
+}
+
+# CREATING RESOURCES
+resource "azurerm_resource_group" "rg" {
+  name     = var.rg_name
+  location = var.location
+
+  tags = module.finops.tags
 }
