@@ -4,21 +4,8 @@ Developed by adejonghm
 
 July 9, 2025
 
-NOTAS:
- - Study about NSG.
-
 */
 
-
-# data "terraform_remote_state" "vnet" {
-#   backend = "azurerm"
-#   config = {
-#     resource_group_name  = "rgterraform"
-#     storage_account_name = "stremotestatefiles"
-#     container_name       = "terraformstates"
-#     key                  = "udm-vnet/terraform.tfstate"
-#   }
-# }
 
 data "terraform_remote_state" "subnets" {
   backend = "azurerm"
@@ -27,10 +14,11 @@ data "terraform_remote_state" "subnets" {
     resource_group_name  = "rgterraform"
     storage_account_name = "stremotestatefiles"
     container_name       = "terraformstates"
-    key                  = "udm-subnets/terraform.tfstate"
+    key                  = "labs/subnets/terraform.tfstate"
   }
 }
 
+# USING THE TAGS MODULE
 module "finops" {
   source = "./modules/tags"
 
@@ -53,6 +41,7 @@ resource "azurerm_resource_group" "rg" {
   tags = module.finops.tags
 }
 
+# CREATING THE VM
 module "vm_ubuntu" {
   source = "./modules/vm_linux"
 
@@ -73,4 +62,6 @@ module "vm_ubuntu" {
   vm_os_disk_type = "Standard_LRS"
   vm_os_sku       = "22_04-lts"
   vm_os_offer     = "0001-com-ubuntu-server-jammy"
+
+  tags = module.finops.tags
 }
