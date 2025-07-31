@@ -11,61 +11,71 @@ July 9, 2025
 
 
 variable "location" {
-  type        = string
   description = ""
+  type        = string
 }
 
 variable "rg_name" {
-  type        = string
   description = ""
+  type        = string
 }
 
 variable "pip_name" {
-  type        = string
   description = ""
+  type        = string
 }
 
 variable "ip_config_name" {
-  type        = string
   description = ""
+  type        = string
+}
+
+variable "subnet_id" {
+  description = ""
+  type        = string
 }
 
 variable "private_ip_allocation_mode" {
-  type        = string
   description = "Private IP"
+  type        = string
 }
 
 variable "pip_allocation_mode" {
-  type        = string
   description = "Public IP"
+  type        = string
 }
 
-variable "vmlx_name" {
-  type        = string
+variable "vm_name" {
   description = ""
+  type        = string
 }
 
-variable "vmlx_size" {
-  type        = string
+variable "vm_size" {
   description = ""
+  type        = string
 }
 
-variable "vmlx_user" {
-  type        = string
+variable "vm_user" {
   description = ""
+  type        = string
 }
 
-variable "vmlx_os_disk_type" {
-  type        = string
+variable "ssh_public_key" {
   description = ""
+  type        = string
 }
 
-variable "vmlx_os_sku" {
-  type        = string
+variable "vm_os_disk_type" {
   description = ""
+  type        = string
 }
 
-variable "vmlx_os_offer" {
-  type        = string
+variable "vm_os_sku" {
   description = ""
+  type        = string
+}
+
+variable "vm_os_offer" {
+  description = ""
+  type        = string
 }

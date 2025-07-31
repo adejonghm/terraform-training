@@ -10,28 +10,29 @@ NOTAS:
 */
 
 
-module "vm-linux" {
-  source = "./modules/vm_linux"
+# data "terraform_remote_state" "vnet" {
+#   backend = "azurerm"
+#   config = {
+#     resource_group_name  = "rgterraform"
+#     storage_account_name = "stremotestatefiles"
+#     container_name       = "terraformstates"
+#     key                  = "udm-vnet/terraform.tfstate"
+#   }
+# }
 
-  # NETWORK VARIABLES
-  pip_name                   = "vmlx001-pip"
-  ip_config_name             = "vmlx001_ip_configs"
-  private_ip_allocation_mode = "Dynamic"
-  pip_allocation_mode        = "Static"
+data "terraform_remote_state" "subnets" {
+  backend = "azurerm"
 
-  # VM VARIABLES
-  rg_name           = azurerm_resource_group.rg.name
-  location          = azurerm_resource_group.rg.location
-  vmlx_name         = "vmlx001"
-  vmlx_size         = "Standard_B1s"
-  vmlx_user         = "lx-user01"
-  vmlx_os_disk_type = "Standard_LRS"
-  vmlx_os_sku       = "22_04-lts"
-  vmlx_os_offer     = "0001-com-ubuntu-server-jammy"
+  config = {
+    resource_group_name  = "rgterraform"
+    storage_account_name = "stremotestatefiles"
+    container_name       = "terraformstates"
+    key                  = "udm-subnets/terraform.tfstate"
+  }
 }
 
 module "finops" {
-  source = "./modules/finops"
+  source = "./modules/tags"
 
   # VARIABLES
   owner       = "adejonghm"
@@ -50,4 +51,26 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 
   tags = module.finops.tags
+}
+
+module "vm_ubuntu" {
+  source = "./modules/vm_linux"
+
+  # NETWORK VARIABLES
+  pip_name                   = "vmlx001-pip"
+  ip_config_name             = "vmlx001_ip_configs"
+  subnet_id                  = data.terraform_remote_state.subnets.outputs.subnets_id[0]
+  private_ip_allocation_mode = "Dynamic"
+  pip_allocation_mode        = "Static"
+
+  # VM VARIABLES
+  rg_name         = azurerm_resource_group.rg.name
+  location        = azurerm_resource_group.rg.location
+  ssh_public_key  = file("~/.ssh/id_rsa.pub")
+  vm_name         = "vmlx001"
+  vm_size         = "Standard_B1s"
+  vm_user         = "lx-user01"
+  vm_os_disk_type = "Standard_LRS"
+  vm_os_sku       = "22_04-lts"
+  vm_os_offer     = "0001-com-ubuntu-server-jammy"
 }
