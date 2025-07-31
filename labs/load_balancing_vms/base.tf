@@ -56,7 +56,7 @@ module "vm_ubuntu" {
   rg_name         = azurerm_resource_group.rg.name
   location        = azurerm_resource_group.rg.location
   ssh_public_key  = file("~/.ssh/id_rsa.pub")
-  vm_name         = "vmlx001"
+  vm_name         = "vmlblx01"
   vm_size         = "Standard_B1s"
   vm_user         = "lx-user01"
   vm_os_disk_type = "Standard_LRS"
