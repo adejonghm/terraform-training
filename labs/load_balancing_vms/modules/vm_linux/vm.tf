@@ -6,24 +6,24 @@ July 9, 2025
 */
 
 resource "azurerm_public_ip" "pip" {
-  name                = var.pip_name
+  name                = "${var.vm_name}_pip"
   resource_group_name = var.rg_name
   location            = var.location
-  allocation_method   = var.pip_allocation_mode
+  allocation_method   = var.pip_allocation_method
 
   tags = var.tags
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                = "${var.vm_name}-nic"
+  name                = "${var.vm_name}_nic"
   location            = var.location
   resource_group_name = var.rg_name
 
   ip_configuration {
-    name                          = var.ip_config_name
+    name                          = var.nic_ip_config_name
     subnet_id                     = var.subnet_id
+    private_ip_address_allocation = var.nic_private_ip_allocation
     public_ip_address_id          = azurerm_public_ip.pip.id
-    private_ip_address_allocation = var.private_ip_allocation_mode
   }
 
   tags = var.tags
@@ -45,15 +45,15 @@ resource "azurerm_linux_virtual_machine" "vmlx" {
   }
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = var.vm_os_disk_type
+    caching              = var.os_disk_cache
+    storage_account_type = var.os_disk_type
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    version   = "latest"
-    offer     = var.vm_os_offer
-    sku       = var.vm_os_sku
+    publisher = var.os_publisher
+    offer     = var.os_offer
+    sku       = var.os_sku
+    version   = var.os_version
   }
 
   tags = var.tags

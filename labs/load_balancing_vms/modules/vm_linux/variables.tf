@@ -2,12 +2,9 @@
 Developed by adejonghm
 ----------
 
-Naming Convention:
-  [resource-abbreviation][platform-course][module]
-  [rg][udmtf][<module-name>]
-
 July 9, 2025
 */
+
 
 
 variable "location" {
@@ -15,17 +12,12 @@ variable "location" {
   type        = string
 }
 
+variable "tags" {
+  description = ""
+  type        = map(string)
+}
+
 variable "rg_name" {
-  description = ""
-  type        = string
-}
-
-variable "pip_name" {
-  description = ""
-  type        = string
-}
-
-variable "ip_config_name" {
   description = ""
   type        = string
 }
@@ -35,13 +27,21 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "private_ip_allocation_mode" {
-  description = "Private IP"
+variable "pip_allocation_method" {
+  description = ""
+  default     = "Static"
   type        = string
 }
 
-variable "pip_allocation_mode" {
-  description = "Public IP"
+variable "nic_ip_config_name" {
+  description = ""
+  default     = "internal"
+  type        = string
+}
+
+variable "nic_private_ip_allocation" {
+  description = ""
+  default     = "Dynamic"
   type        = string
 }
 
@@ -52,6 +52,7 @@ variable "vm_name" {
 
 variable "vm_size" {
   description = ""
+  default     = "Standard_B2s"
   type        = string
 }
 
@@ -65,22 +66,34 @@ variable "ssh_public_key" {
   type        = string
 }
 
-variable "vm_os_disk_type" {
+variable "os_disk_cache" {
+  description = ""
+  default     = "ReadWrite"
+  type        = string
+}
+
+variable "os_disk_type" {
+  description = ""
+  default     = "Standard_LRS"
+  type        = string
+}
+
+variable "os_publisher" {
   description = ""
   type        = string
 }
 
-variable "vm_os_sku" {
+variable "os_offer" {
   description = ""
   type        = string
 }
 
-variable "vm_os_offer" {
+variable "os_sku" {
   description = ""
   type        = string
 }
 
-variable "tags" {
+variable "os_version" {
   description = ""
-  type        = map(string)
+  type        = string
 }
