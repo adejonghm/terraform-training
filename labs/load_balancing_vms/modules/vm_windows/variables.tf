@@ -63,6 +63,7 @@ variable "vm_user" {
 
 variable "vm_pass" {
   type        = string
+  sensitive   = true
   description = ""
 }
 

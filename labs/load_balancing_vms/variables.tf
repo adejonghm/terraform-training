@@ -26,3 +26,8 @@ variable "rg_name" {
   description = "Resource group for Load Balancing laboratory"
 }
 
+variable "win_pass" {
+  type        = string
+  sensitive   = true
+  description = ""
+}
