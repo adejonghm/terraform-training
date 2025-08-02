@@ -5,8 +5,8 @@ Developed by adejonghm
 July 9, 2025
 
 NOTES:
+- Create the Load Balancer module.
 - Add two Linux VMs, one in each subnet. Use for_each or dynamic
-
 */
 
 
