@@ -63,6 +63,8 @@ module "vm_windows" {
   os_sku       = "2022-datacenter-g2"
   os_version   = "latest"
 
+  tags = module.finops.tags
+
   ## OPTIONAL VARIABLES
   # pip_allocation_method     = ""
   # nic_ip_config_name        = ""
@@ -70,8 +72,6 @@ module "vm_windows" {
   # vm_size                   = ""
   # os_disk_cache             = ""
   # os_disk_type              = ""
-
-  tags = module.finops.tags
 }
 
 module "vm_ubuntu" {
@@ -83,15 +83,17 @@ module "vm_ubuntu" {
   ## VM VARIABLES
   rg_name        = azurerm_resource_group.rg.name
   location       = azurerm_resource_group.rg.location
-  ssh_public_key = file("~/.ssh/id_rsa.pub")
   vm_name        = "vmloadbalancerlx01"
   vm_user        = "lx-user01"
+  ssh_public_key = var.public_key
 
   ## OS VARIABLES
   os_publisher = "Canonical"
   os_offer     = "0001-com-ubuntu-server-jammy"
   os_sku       = "22_04-lts"
   os_version   = "latest"
+
+  tags = module.finops.tags
 
   ## OPTIONAL VARIABLES
   # pip_allocation_method     = ""
@@ -100,6 +102,4 @@ module "vm_ubuntu" {
   # vm_size                   = ""
   # os_disk_cache             = ""
   # os_disk_type              = ""
-
-  tags = module.finops.tags
 }

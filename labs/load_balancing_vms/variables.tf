@@ -31,3 +31,8 @@ variable "win_pass" {
   type        = string
   sensitive   = true
 }
+
+variable "public_key" {
+  description = "Public key for the Linux virtual machine administrator account"
+  type        = string
+}
