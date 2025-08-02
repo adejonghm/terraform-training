@@ -9,7 +9,7 @@ Naming Convention:
 March 4, 2024
 */
 
-variable "my-subscription-id" {
+variable "subscription_id" {
   type        = string
   description = "ID of the Subscription that I use"
 }

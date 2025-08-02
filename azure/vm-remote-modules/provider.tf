@@ -16,15 +16,15 @@ terraform {
   }
 
   backend "azurerm" {
-    key                  = "udemo-vm-remote-module/terraform.tfstate"
-    container_name       = "remote-state"
-    resource_group_name  = "rgudmtfstates"
-    storage_account_name = "studmtfstates"
+    resource_group_name  = "rgterraform"
+    storage_account_name = "staremotestatefiles"
+    container_name       = "blobremotestates"
+    key                  = "udm-vm-remote-vnet/terraform.tfstate"
   }
 }
 
 provider "azurerm" {
-  subscription_id = var.my-subscription-id
+  subscription_id = var.subscription_id
   features {}
 }
 
