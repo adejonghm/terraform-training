@@ -6,7 +6,7 @@ July 9, 2025
 */
 
 resource "azurerm_public_ip" "pip" {
-  name                = "${var.vm_name}_pip"
+  name                = "${var.vm_name}.pip"
   resource_group_name = var.rg_name
   location            = var.location
   allocation_method   = var.pip_allocation_method
@@ -15,7 +15,7 @@ resource "azurerm_public_ip" "pip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                = "${var.vm_name}_nic"
+  name                = "${var.vm_name}.nic"
   location            = var.location
   resource_group_name = var.rg_name
 
