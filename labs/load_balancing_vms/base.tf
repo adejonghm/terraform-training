@@ -21,6 +21,20 @@ data "terraform_remote_state" "subnets" {
   }
 }
 
+locals {
+  number_of_vms = 2
+  os_type       = "lx"
+  subnet_ids    = data.terraform_remote_state.subnets.outputs.subnet_ids
+
+  vms = {
+    for idx in range(local.number_of_vms) :
+    "${var.vm_name_prefix}${local.os_type}${idx + 1}" => {
+      index     = idx + 1
+      subnet_id = local.subnet_ids[idx % length(local.subnet_ids)]
+    }
+  }
+}
+
 # USING THE TAGS MODULE
 module "finops" {
   source = "./modules/tags"
@@ -44,48 +58,20 @@ resource "azurerm_resource_group" "rg" {
   tags = module.finops.tags
 }
 
-module "vm_windows" {
-  source = "./modules/vm_windows"
-
-  ## NETWORK VARIABLES
-  subnet_id = data.terraform_remote_state.subnets.outputs.subnets_id[0]
-
-  ## VM VARIABLES
-  location = azurerm_resource_group.rg.location
-  rg_name  = azurerm_resource_group.rg.name
-  vm_name  = "vmloadbalancerwn01"
-  vm_user  = "wn-user01"
-  vm_pass  = var.win_pass
-
-  ## OS VARIABLES
-  os_publisher = "MicrosoftWindowsServer"
-  os_offer     = "WindowsServer"
-  os_sku       = "2022-datacenter-g2"
-  os_version   = "latest"
-
-  tags = module.finops.tags
-
-  ## OPTIONAL VARIABLES
-  # pip_allocation_method     = ""
-  # nic_ip_config_name        = ""
-  # nic_private_ip_allocation = ""
-  # vm_size                   = ""
-  # os_disk_cache             = ""
-  # os_disk_type              = ""
-}
-
 module "vm_ubuntu" {
   source = "./modules/vm_linux"
 
+  for_each = local.vms
+
   ## NETWORK VARIABLES
-  subnet_id = data.terraform_remote_state.subnets.outputs.subnets_id[1]
+  subnet_id = each.value.subnet_id
 
   ## VM VARIABLES
   rg_name        = azurerm_resource_group.rg.name
   location       = azurerm_resource_group.rg.location
-  vm_name        = "vmloadbalancerlx01"
+  vm_name        = each.key
   vm_user        = "lx-user01"
-  ssh_public_key = var.public_key
+  ssh_public_key = file(var.key_path)
 
   ## OS VARIABLES
   os_publisher = "Canonical"

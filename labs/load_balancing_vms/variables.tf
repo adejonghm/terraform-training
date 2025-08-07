@@ -32,7 +32,13 @@ variable "win_pass" {
   sensitive   = true
 }
 
-variable "public_key" {
+variable "vm_name_prefix" {
+  description = "Prefix for the names of the virtual machines in the load balancer"
+  type        = string
+  default     = "vmloadbalancer"
+}
+
+variable "key_path" {
   description = "Public key for the Linux virtual machine administrator account"
   type        = string
 }
