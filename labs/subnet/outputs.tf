@@ -5,7 +5,7 @@ Developed by adejonghm
 March 4, 2024
 */
 
-output "subnets_id" {
+output "subnet_ids" {
   description = "Subnets ID created for the Virtual Network"
   sensitive   = true
 
@@ -14,7 +14,7 @@ output "subnets_id" {
   ]
 }
 
-output "subnets_name" {
+output "subnet_names" {
   description = "Subnets Name created for the Virtual Network"
 
   value = [
