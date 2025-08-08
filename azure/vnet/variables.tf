@@ -17,13 +17,13 @@ variable "subscription_id" {
 }
 variable "location" {
   type        = string
-  default     = "South Central Us"
+  default     = "West US 3"
   description = "Azure Region used in the Terraform training"
 }
 
 variable "rg_name" {
   type        = string
-  default     = "rgvnet"
+  default     = "rgazvnets"
   description = "Resource group used to create a Virtual Network"
 }
 
@@ -38,10 +38,3 @@ variable "vnet_address_space" {
   default     = "10.88.0.0/16"
   description = "Address space for the VNet created to be used by other Virtual Machines"
 }
-
-# variable "subnets" {
-#   type = map(string)
-#   default = {
-#     snetgeneralpurpose = "10.20.1.0/24"
-#   }
-# }
