@@ -11,13 +11,13 @@ November 23, 2023
 
 variable "location" {
   type        = string
-  default     = "South Central US"
+  default     = "West US 3"
   description = "Azure location that I'm using"
 }
 
 variable "rg_name" {
   type        = string
-  default     = "rgterraform"
+  default     = "rgtfsource"
   description = "Name of the Resource Group for Remote State"
 }
 
