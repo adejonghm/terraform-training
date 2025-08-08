@@ -26,10 +26,12 @@ output "vnet_address_space" {
 
 }
 
-# output "subnets_id" {
-#   value = {
-#     for name, subnet in azurerm_subnet.subnets :
-#     name => subnet.id
-#   }
-#   description = "Subnet ID created in the Virtual Network"
-# }
+output "subnet_id" {
+  value       = azurerm_subnet.subnet.id
+  description = "Subnet ID created in the Virtual Network"
+}
+
+output "nsg_core_id" {
+  description = ""
+  value       = azurerm_network_security_group.nsg.id
+}
