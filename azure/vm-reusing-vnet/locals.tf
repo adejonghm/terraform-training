@@ -7,8 +7,9 @@ March 2, 2024
 
 locals {
   commong_tags = {
-    env        = "udemy-course"
-    managed-by = "terraform"
-    owner      = "adejonghm"
+    owner       = "adejonghm"
+    managed-by  = "terraform"
+    environment = "udemy_course"
+    project     = "vm_reusing_vnet"
   }
 }

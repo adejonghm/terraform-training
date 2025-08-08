@@ -14,25 +14,19 @@ variable "subscription_id" {
   description = "ID of the Subscription that I use"
 }
 
-variable "location" {
+variable "rg_name" {
   type        = string
-  default     = "Brazil South"
-  description = "Azure Region used in the Terraform training"
-}
-
-variable "rg_vm_without_vnet" {
-  type        = string
-  default     = "rgvmlinux"
+  default     = "rgmodule02"
   description = "Resource group used to create an all-in-one Virtual Machine"
 }
 
-variable "nic_vm_without_vnet" {
+variable "nic_name" {
   type        = string
   default     = "nicvmlxusingvnet"
   description = "Network Interface used to create an all-in-one Virtual Machine"
 }
 
-variable "pip_vm_without_vnet" {
+variable "pip_name" {
   type        = string
   default     = "pipvmlxusingvnet"
   description = "Public IP for the all-in-one Virtual Machine"
@@ -44,7 +38,7 @@ variable "pip_allocation_method" {
   description = "The public IP allocation method used to create a Virtual Machine"
 }
 
-variable "vm_without_vnet" {
+variable "vm_name" {
   type        = string
   default     = "vmlxusingvnet"
   description = "Name of the All-in-One Virtual Machine"
@@ -65,7 +59,7 @@ variable "vm_username" {
 variable "vm_disk_type" {
   type        = string
   default     = "StandardSSD_LRS"
-  description = "Storage Account disk type used in the Virtual Machine"
+  description = "Disk type used in the Virtual Machine"
 }
 
 variable "vm_disk_cache" {
@@ -74,32 +68,37 @@ variable "vm_disk_cache" {
   description = "Disk cache type used in the Virtual Machine"
 }
 
-variable "vm_image_sku" {
+variable "image_sku" {
   type        = string
   default     = "22_04-lts-gen2"
-  description = "Sku image reference used to create a Virtual Machine"
+  description = "SKU of the VM image to use for the Virtual Machine"
 }
 
-variable "vm_image_offer" {
+variable "image_offer" {
   type        = string
   default     = "0001-com-ubuntu-server-jammy"
-  description = "Sku image reference used to create a Virtual Machine"
+  description = "Offer of the VM image to use for the Virtual Machine"
 }
 
-variable "vm_image_version" {
+variable "image_version" {
   type        = string
   default     = "latest"
-  description = "Sku image reference used to create a Virtual Machine"
+  description = "Version of the VM image to use for the Virtual Machine"
 }
 
-variable "vm_image_publisher" {
+variable "image_publisher" {
   type        = string
   default     = "Canonical"
-  description = "Sku image reference used to create a Virtual Machine"
+  description = "Publisher of the VM image to use for the Virtual Machine"
 }
 
-variable "private_ip_allocation-method" {
+variable "private_ip_allocation_method" {
   type        = string
   default     = "Dynamic"
   description = "The private IP allocation method used to create a Virtual Machine"
+}
+
+variable "ssh_key_path" {
+  description = "Path to the SSH public key file for VM authentication"
+  type        = string
 }
