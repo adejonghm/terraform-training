@@ -4,21 +4,30 @@ Developed by adejonghm
 
 July 9, 2025
 
-NOTES:
-- Create the Load Balancer module.
-
 */
 
 
-# READING SUBNETS
+# GET VNET
+data "terraform_remote_state" "vnet" {
+  backend = "azurerm"
+
+  config = {
+    resource_group_name  = "rgtfsource"
+    storage_account_name = "stremotestatefiles"
+    container_name       = "terraformstates"
+    key                  = "core/vnet/terraform.tfstate"
+  }
+}
+
+# GET SUBNETS
 data "terraform_remote_state" "subnets" {
   backend = "azurerm"
 
   config = {
-    resource_group_name  = "rgterraform"
+    resource_group_name  = "rgtfsource"
     storage_account_name = "stremotestatefiles"
     container_name       = "terraformstates"
-    key                  = "labs/subnets/terraform.tfstate"
+    key                  = "core/subnet/terraform.tfstate"
   }
 }
 
@@ -29,22 +38,22 @@ module "finops" {
   # VARIABLES
   owner       = "adejonghm"
   managed_by  = "terraform"
-  environment = "sandbox"
+  environment = "labs"
 
   # ADDICIONAL TAGS
   additional_tags = {
-    project = "load_balancing_vms"
+    project = "balancing_vm_traffic"
   }
 }
 
 resource "azurerm_resource_group" "rg" {
+  location = data.terraform_remote_state.vnet.outputs.vnet_location
   name     = var.rg_name
-  location = var.location
 
   tags = module.finops.tags
 }
 
-module "vm_ubuntu" {
+module "vm" {
   source = "./modules/vm"
 
   for_each = local.vms
@@ -56,7 +65,7 @@ module "vm_ubuntu" {
   rg_name        = azurerm_resource_group.rg.name
   location       = azurerm_resource_group.rg.location
   vm_name        = each.key
-  vm_user        = "lx-user01"
+  vm_user        = "lx_user01"
   ssh_public_key = file(var.ssh_key_path)
 
   ## OS VARIABLES
