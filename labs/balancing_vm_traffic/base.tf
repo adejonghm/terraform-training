@@ -5,7 +5,6 @@ Developed by adejonghm
 July 9, 2025
 
 NOTES:
-- Copy html file into de VMs
 - Create the Load Balancer module.
 
 */
@@ -79,10 +78,14 @@ module "vm" {
   os_version   = "latest"
 
   # CUSTOM DATA FOR INSTALL NGINX
-  web_server_install = filebase64("./script/install_nginx.sh")
+  web_server_install = filebase64("./scripts/install_nginx.sh")
 
   # RESOURCE TAGS 
   tags = module.finops.tags
+
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
 
   ## OPTIONAL VARIABLES
   # pip_allocation_method     = ""

@@ -10,7 +10,7 @@ apt-get install -y nginx
 rm -f /var/www/html/index.nginx-debian.html
 
 # create new custom index.html
-echo "<h1>Hello World from $(hostname)</h1>" > /var/www/html/index.html
+echo '<h1>Hello World from "$(hostname)"</h1>' > /var/www/html/index.html
 
 # start the service
 systemctl enable nginx
