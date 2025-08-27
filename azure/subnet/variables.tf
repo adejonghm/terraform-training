@@ -34,8 +34,9 @@ variable "nsg_rules" {
     destination_address_prefix = string
   }))
   default = [
+    # SSH Connection
     {
-      name                       = "SSH"
+      name                       = "allow_ssh"
       priority                   = 100
       direction                  = "Inbound"
       access                     = "Allow"
@@ -45,14 +46,27 @@ variable "nsg_rules" {
       source_address_prefix      = "*"
       destination_address_prefix = "*"
     },
+    # PING
     {
-      name                       = "RDP"
-      priority                   = 110
+      name                       = "allow_icmp"
+      priority                   = 120
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Icmp"
+      source_port_range          = "*"
+      destination_port_range     = "*"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    },
+    # HTTP Web
+    {
+      name                       = "allow_http"
+      priority                   = 140
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "Tcp"
       source_port_range          = "*"
-      destination_port_range     = "3389"
+      destination_port_range     = "80"
       source_address_prefix      = "*"
       destination_address_prefix = "*"
     }
