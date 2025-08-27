@@ -4,6 +4,10 @@ Developed by adejonghm
 
 July 9, 2025
 
+NOTES:
+- Copy html file into de VMs
+- Create the Load Balancer module.
+
 */
 
 
@@ -74,6 +78,10 @@ module "vm" {
   os_sku       = "22_04-lts"
   os_version   = "latest"
 
+  # CUSTOM DATA FOR INSTALL NGINX
+  web_server_install = filebase64("./script/install_nginx.sh")
+
+  # RESOURCE TAGS 
   tags = module.finops.tags
 
   ## OPTIONAL VARIABLES

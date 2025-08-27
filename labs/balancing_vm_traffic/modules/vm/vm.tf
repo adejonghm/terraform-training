@@ -56,5 +56,7 @@ resource "azurerm_linux_virtual_machine" "vmlx" {
     version   = var.os_version
   }
 
+  custom_data = var.web_server_install
+
   tags = var.tags
 }

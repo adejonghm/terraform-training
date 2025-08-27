@@ -97,3 +97,8 @@ variable "os_version" {
   description = "Version of the OS image (e.g., latest, 18.04.202006180)"
   type        = string
 }
+
+variable "web_server_install" {
+  description = "Script to be executed during VM provisioning, typically used for installing and configuring web server software"
+  type        = string
+}
