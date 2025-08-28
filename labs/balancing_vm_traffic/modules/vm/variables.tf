@@ -8,7 +8,7 @@ July 9, 2025
 
 
 variable "location" {
-  description = "Azure region where the Linux VM will be deployed"
+  description = "Azure region where the resource will be deployed"
   type        = string
 }
 
@@ -18,19 +18,13 @@ variable "tags" {
 }
 
 variable "rg_name" {
-  description = "Name of the resource group where the Linux VM will be deployed"
+  description = "Name of the resource group where the resource will be deployed"
   type        = string
 }
 
 variable "subnet_id" {
   description = "ID of the subnet where the Linux VM's network interface will be attached"
   type        = string
-}
-
-variable "pip_allocation_method" {
-  description = "Allocation method for the public IP address (Static or Dynamic)"
-  type        = string
-  default     = "Static"
 }
 
 variable "nic_ip_config_name" {
