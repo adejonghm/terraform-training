@@ -11,6 +11,6 @@ terraform {
     resource_group_name  = "rgtfsource"
     storage_account_name = "stremotestatefiles"
     container_name       = "terraformstates"
-    key                  = "labs/balancing_vm_traffic/terraform.tfstate"
+    key                  = "labs/load_balancer_lx_servers/terraform.tfstate"
   }
 }
