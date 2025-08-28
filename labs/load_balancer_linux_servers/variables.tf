@@ -34,7 +34,7 @@ variable "environment" {
 variable "project" {
   description = "Project name for resource tagging and organization"
   type        = string
-  default     = "balancing_vm_traffic"
+  default     = "lb_linux_servers"
 }
 
 ## RESOURCE GROUP
