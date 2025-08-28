@@ -6,16 +6,7 @@ January 27, 2025
 */
 
 
-resource "azurerm_public_ip" "pip" {
-  name                = "${var.lb_name}.pip"
-  location            = var.location
-  resource_group_name = var.rg_name
-  allocation_method   = var.pip_allocation_method
-
-  tags = var.tags
-}
-
-resource "azurerm_lb" "public_lb" {
+resource "azurerm_lb" "lb" {
   sku                 = var.lb_sku
   name                = var.lb_name
   location            = var.location
@@ -31,21 +22,21 @@ resource "azurerm_lb" "public_lb" {
 
 resource "azurerm_lb_backend_address_pool" "bpool" {
   name            = "bpool-${var.lb_name}"
-  loadbalancer_id = azurerm_lb.public_lb.id
+  loadbalancer_id = azurerm_lb.lb.id
 
   depends_on = [
-    azurerm_lb.public_lb
+    azurerm_lb.lb
   ]
 }
 
-resource "azurerm_lb_probe" "ssh_probe" {
+resource "azurerm_lb_probe" "vm_probe" {
   name            = "probe-${var.lb_name}"
   port            = var.probe_port
   protocol        = var.protocol
-  loadbalancer_id = azurerm_lb.public_lb.id
+  loadbalancer_id = azurerm_lb.lb.id
 
   depends_on = [
-    azurerm_lb.public_lb
+    azurerm_lb.lb
   ]
 }
 
@@ -55,11 +46,20 @@ resource "azurerm_lb_rule" "http" {
   frontend_port                  = var.fend_port
   backend_port                   = var.bend_port
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.bpool.id]
-  probe_id                       = azurerm_lb_probe.ssh_probe.id
-  loadbalancer_id                = azurerm_lb.public_lb.id
-  frontend_ip_configuration_name = azurerm_lb.public_lb.frontend_ip_configuration[0].name
+  probe_id                       = azurerm_lb_probe.vm_probe.id
+  loadbalancer_id                = azurerm_lb.lb.id
+  frontend_ip_configuration_name = azurerm_lb.lb.frontend_ip_configuration[0].name
 
   depends_on = [
-    azurerm_lb_probe.ssh_probe
+    azurerm_lb_probe.vm_probe
   ]
+}
+
+resource "azurerm_public_ip" "pip" {
+  name                = "${var.lb_name}.pip"
+  location            = var.location
+  resource_group_name = var.rg_name
+  allocation_method   = var.pip_allocation_method
+
+  tags = var.tags
 }

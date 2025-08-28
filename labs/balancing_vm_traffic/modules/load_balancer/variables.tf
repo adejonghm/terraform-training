@@ -28,41 +28,41 @@ variable "pip_allocation_method" {
 }
 
 variable "lb_name" {
-  description = ""
+  description = "Name of the Azure Load Balancer resource"
   type        = string
 }
 
 variable "lb_sku" {
-  description = ""
+  description = "SKU of the Azure Load Balancer (Basic or Standard)"
   type        = string
 }
 
 variable "protocol" {
-  description = ""
+  description = "Protocol for the load balancer rule (Tcp, Udp, or All)"
   type        = string
   default     = "Tcp"
 }
 
 variable "probe_port" {
-  description = ""
+  description = "Port number for the health probe to check backend VM health"
   type        = number
   default     = 22
 }
 
 variable "fend_port" {
-  description = ""
+  description = "Frontend port number that clients connect to on the load balancer"
   type        = number
   default     = 80
 }
 
 variable "bend_port" {
-  description = ""
+  description = "Backend port number on the virtual machines where traffic is forwarded"
   type        = number
   default     = 80
 }
 
 variable "ip_config_name" {
-  description = ""
+  description = "Name of the frontend IP configuration for the load balancer"
   type        = string
   default     = "ip-configuration"
 }
