@@ -36,7 +36,7 @@ data "terraform_remote_state" "subnets" {
 
 # USING THE TAGS MODULE
 module "finops" {
-  source = "./modules/tags"
+  source = "github.com/adejonghm/terraform-modules/tags"
 
   # VARIABLES
   owner       = var.owner

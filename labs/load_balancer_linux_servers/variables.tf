@@ -28,7 +28,7 @@ variable "management" {
 variable "environment" {
   description = "Environment where the resources will be deployed (e.g., dev, test, prod, labs)"
   type        = string
-  default     = "labs"
+  default     = "demo"
 }
 
 variable "project" {
