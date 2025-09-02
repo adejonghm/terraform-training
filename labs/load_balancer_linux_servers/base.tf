@@ -4,11 +4,14 @@ Developed by adejonghm
 
 July 9, 2025
 
-NOTES:
-- Create the Load Balancer module.
-
 */
 
+
+### NOTES ###
+# [ ] Create the subnets in the existing VNet
+# [ ] Create the NSG for the subnets with the rules for load balancer
+# [ ] Fix the Probe port in the Load Balancer
+#############
 
 # GET VNET
 data "terraform_remote_state" "vnet" {
