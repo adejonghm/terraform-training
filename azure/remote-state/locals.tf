@@ -7,7 +7,7 @@ November 23, 2023
 
 locals {
   common_tags = {
-    managed-by = "terraform"
+    managed_by = "terraform"
     owner      = "adejonghm"
     project    = "core"
   }
