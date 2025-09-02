@@ -37,7 +37,7 @@ data "terraform_remote_state" "subnets" {
   }
 }
 
-# USING THE TAGS MODULE
+# IMPORT THE TAGS MODULE
 module "finops" {
   source = "github.com/adejonghm/terraform-modules/tags"
 
@@ -52,13 +52,7 @@ module "finops" {
   }
 }
 
-resource "azurerm_resource_group" "rg" {
-  location = data.terraform_remote_state.vnet.outputs.vnet_location
-  name     = var.rg_name
-
-  tags = module.finops.tags
-}
-
+# CREATE VIRTUAL MACHINES
 module "vm" {
   source = "./modules/vm"
 
@@ -98,6 +92,7 @@ module "vm" {
   # os_disk_type              = ""
 }
 
+# CREATE LOAD BALANCER
 module "load_balancer" {
   source = "./modules/load_balancer"
 
@@ -122,6 +117,15 @@ module "load_balancer" {
   # bend_port             = ""
 }
 
+# CREATE RESOURCE GROUP
+resource "azurerm_resource_group" "rg" {
+  location = data.terraform_remote_state.vnet.outputs.vnet_location
+  name     = var.rg_name
+
+  tags = module.finops.tags
+}
+
+# ASSOCIATE THE NETWORK INTERFACE TO THE BACKEND ADDRESS POOL
 resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool" {
   depends_on = [
     module.vm,
