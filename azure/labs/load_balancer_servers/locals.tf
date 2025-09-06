@@ -19,9 +19,9 @@ locals {
     }
   }
 
-  # ## GET THE NETWORK INTERFACE IDs
-  # vm_nic_ids = {
-  #   for vm_name, vm in module.vm :
-  #   vm_name => vm.nic_id
-  # }
+  ## GET THE NETWORK INTERFACE IDs
+  vm_nic_ids = {
+    for vm_name, vm in module.vm :
+    vm_name => vm.nic_id
+  }
 }

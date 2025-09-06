@@ -96,8 +96,8 @@ module "vm" {
   ## VM VARIABLES
   for_each = local.vms
 
-  rg_name        = azurerm_resource_group.rg.name
   location       = azurerm_resource_group.rg.location
+  vm_rg          = azurerm_resource_group.rg.name
   vm_name        = each.key
   vm_user        = var.user
   ssh_public_key = file(var.ssh_key_path)
@@ -121,7 +121,6 @@ module "vm" {
   # os_disk_type              = ""
 }
 
-/*
 module "load_balancer" {
   source = "./modules/load_balancer"
 
@@ -130,19 +129,19 @@ module "load_balancer" {
   ]
 
   ## LOAD BALANCER VARIABLES
-  rg_name  = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  lb_name  = var.lb_name
-  lb_sku   = var.lb_sku
+  location   = azurerm_resource_group.rg.location
+  lb_rg      = azurerm_resource_group.rg.name
+  lb_name    = var.lb_name
+  lb_sku     = var.lb_sku
+  probe_port = var.backend_port
+  bend_port  = var.backend_port
 
   tags = module.finops.tags
 
   ## OPTIONAL VARIABLES
   # pip_allocation_method = ""
   # protocol              = ""
-  # probe_port            = ""
   # fend_port             = ""
-  # bend_port             = ""
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool" {
@@ -157,4 +156,3 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool
   backend_address_pool_id = module.load_balancer.backend_address_pool_id
   ip_configuration_name   = module.vm[each.key].ip_configuration_name[0].name
 }
-*/
