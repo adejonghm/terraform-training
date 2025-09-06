@@ -17,7 +17,7 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "rg_name" {
+variable "vm_rg" {
   description = "Name of the resource group where the resource will be deployed"
   type        = string
 }
