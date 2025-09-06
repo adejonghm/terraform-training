@@ -8,6 +8,16 @@ Mar 1, 2024
 */
 
 
+data "terraform_remote_state" "vnet" {
+  backend = "azurerm"
+  config = {
+    resource_group_name  = "rgtfsource"
+    storage_account_name = "stremotestatefiles"
+    container_name       = "tfstates"
+    key                  = "core/vnet/terraform.tfstate"
+  }
+}
+
 resource "azurerm_network_security_group" "nsg" {
   name                = var.nsg_name
   location            = data.terraform_remote_state.vnet.outputs.vnet_location

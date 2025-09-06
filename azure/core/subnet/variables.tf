@@ -77,7 +77,6 @@ variable "subnets" {
   description = "A map of subnet names to their corresponding address prefixes for the Virtual Network"
   type        = map(string)
   default = {
-    snetlablb001 = "10.88.20.0/24",
-    snetlablb002 = "10.88.30.0/24",
+    snetlab001 = "10.88.20.0/24",
   }
 }
