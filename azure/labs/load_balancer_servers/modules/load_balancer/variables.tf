@@ -46,7 +46,6 @@ variable "protocol" {
 variable "probe_port" {
   description = "Port number for the health probe to check backend VM health"
   type        = number
-  default     = 22
 }
 
 variable "fend_port" {
