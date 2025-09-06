@@ -10,7 +10,7 @@ resource "azurerm_lb" "lb" {
   sku                 = var.lb_sku
   name                = var.lb_name
   location            = var.location
-  resource_group_name = var.rg_name
+  resource_group_name = var.lb_rg
 
   frontend_ip_configuration {
     name                 = "fe-${var.lb_name}"
@@ -58,7 +58,7 @@ resource "azurerm_lb_rule" "http" {
 resource "azurerm_public_ip" "pip" {
   name                = "${var.lb_name}.pip"
   location            = var.location
-  resource_group_name = var.rg_name
+  resource_group_name = var.lb_rg
   allocation_method   = var.pip_allocation_method
 
   tags = var.tags
