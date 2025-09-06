@@ -12,14 +12,50 @@ variable "subscription_id" {
   type        = string
 }
 
-## SUBNET MODULE
+## NETWORK
 variable "subnets" {
   description = "Map of subnet names to their address prefixes"
   type        = map(string)
   default = {
-    snetlxservers001 = "10.88.20.0/24",
-    snetlxservers002 = "10.88.30.0/24"
+    snetservers001 = "10.88.20.0/24",
+    snetservers002 = "10.88.30.0/24"
   }
+}
+
+variable "nsg_name" {
+  description = "Name of the Network Security Group used to protect the servers behind the load balancer"
+  type        = string
+  default     = "nsg-lablbservers"
+}
+
+variable "nsg_rules" {
+  description = ""
+  type = list(
+    object({
+      name                       = string
+      priority                   = number
+      direction                  = string
+      access                     = string
+      protocol                   = string
+      source_port_range          = string
+      destination_port_range     = string
+      source_address_prefix      = string
+      destination_address_prefix = string
+    })
+  )
+  default = [
+    {
+      name                       = "Allow-HTTP-Inbound"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "80"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  ]
 }
 
 ## FINOPS MODULE
@@ -38,20 +74,20 @@ variable "management" {
 variable "environment" {
   description = "Environment where the resources will be deployed (e.g., dev, test, prod, labs)"
   type        = string
-  default     = "demo"
+  default     = "labs"
 }
 
 variable "project" {
   description = "Project name for resource tagging and organization"
   type        = string
-  default     = "lb_linux_servers"
+  default     = "lb_servers"
 }
 
 ## RESOURCE GROUP
 variable "rg_name" {
   description = "Name of the resource group where the resource will be deployed"
   type        = string
-  default     = "rgbalancingtraffic"
+  default     = "rglbservers"
 }
 
 ## VIRTUAL MACHINE MODULE

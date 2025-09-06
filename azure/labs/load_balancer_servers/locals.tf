@@ -9,7 +9,8 @@ August 6, 2025
 locals {
   ## CREATING A VM IN EACH SUBNET
   number_of_vms = var.number_of_instances
-  subnet_ids    = data.terraform_remote_state.subnets.outputs.subnet_ids
+  subnet_ids    = [for snet in module.snet : snet.subnet_id]
+
   vms = {
     for idx in range(local.number_of_vms) :
     "${var.vm_name}${idx + 1}" => {
@@ -18,9 +19,9 @@ locals {
     }
   }
 
-  ## GET THE NETWORK INTERFACE IDs
-  vm_nic_ids = {
-    for vm_name, vm in module.vm :
-    vm_name => vm.nic_id
-  }
+  # ## GET THE NETWORK INTERFACE IDs
+  # vm_nic_ids = {
+  #   for vm_name, vm in module.vm :
+  #   vm_name => vm.nic_id
+  # }
 }

@@ -18,7 +18,7 @@ data "terraform_remote_state" "vnet" {
   config = {
     resource_group_name  = "rgtfsource"
     storage_account_name = "stremotestatefiles"
-    container_name       = "terraformstates"
+    container_name       = "tfstates"
     key                  = "core/vnet/terraform.tfstate"
   }
 }
@@ -40,15 +40,49 @@ module "finops" {
 module "snet" {
   source = "github.com/adejonghm/terraform-modules/subnet"
 
-  vnet_rg   = data.terraform_remote_state.vnet.outputs.vnet_rg
-  vnet_name = data.terraform_remote_state.vnet.outputs.vnet_name
-
+  vnet_rg          = data.terraform_remote_state.vnet.outputs.vnet_rg
+  vnet_name        = data.terraform_remote_state.vnet.outputs.vnet_name
   for_each         = var.subnets
   snet_name        = each.key
-  address_prefixes = each.value
+  address_prefixes = [each.value]
+}
+
+resource "azurerm_network_security_group" "nsg" {
+  resource_group_name = data.terraform_remote_state.vnet.outputs.vnet_rg
+  location            = data.terraform_remote_state.vnet.outputs.vnet_location
+  name                = var.nsg_name
+
+  dynamic "security_rule" {
+    for_each = var.nsg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg_snet" {
+  network_security_group_id = azurerm_network_security_group.nsg.id
+
+  for_each  = module.snet
+  subnet_id = each.value.subnet_id
 }
 
 ### CREATE THE RESOURCES
+resource "azurerm_resource_group" "rg" {
+  location = data.terraform_remote_state.vnet.outputs.vnet_location
+  name     = var.rg_name
+
+  tags = module.finops.tags
+}
+
 module "vm" {
   source = "./modules/vm"
 
@@ -87,6 +121,7 @@ module "vm" {
   # os_disk_type              = ""
 }
 
+/*
 module "load_balancer" {
   source = "./modules/load_balancer"
 
@@ -110,13 +145,6 @@ module "load_balancer" {
   # bend_port             = ""
 }
 
-resource "azurerm_resource_group" "rg" {
-  location = data.terraform_remote_state.vnet.outputs.vnet_location
-  name     = var.rg_name
-
-  tags = module.finops.tags
-}
-
 resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool" {
   depends_on = [
     module.vm,
@@ -129,3 +157,4 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool
   backend_address_pool_id = module.load_balancer.backend_address_pool_id
   ip_configuration_name   = module.vm[each.key].ip_configuration_name[0].name
 }
+*/
