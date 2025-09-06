@@ -12,6 +12,16 @@ variable "subscription_id" {
   type        = string
 }
 
+## SUBNET MODULE
+variable "subnets" {
+  description = "Map of subnet names to their address prefixes"
+  type        = map(string)
+  default = {
+    snetlxservers001 = "10.88.20.0/24",
+    snetlxservers002 = "10.88.30.0/24"
+  }
+}
+
 ## FINOPS MODULE
 variable "owner" {
   description = "Owner of the resources for tagging and cost allocation purposes"

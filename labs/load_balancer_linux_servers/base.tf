@@ -4,16 +4,14 @@ Developed by adejonghm
 
 July 9, 2025
 
+ToDo:
+> [x] Create the subnets in the existing VNet
+> [ ] Create the NSG for the subnets with the rules for load balancer
+> [ ] Fix the Probe port in the Load Balancer
 */
 
 
-### NOTES ###
-# [ ] Create the subnets in the existing VNet
-# [ ] Create the NSG for the subnets with the rules for load balancer
-# [ ] Fix the Probe port in the Load Balancer
-#############
-
-# GET VNET
+### GETs & IMPORTs
 data "terraform_remote_state" "vnet" {
   backend = "azurerm"
 
@@ -25,34 +23,32 @@ data "terraform_remote_state" "vnet" {
   }
 }
 
-# GET SUBNETS
-data "terraform_remote_state" "subnets" {
-  backend = "azurerm"
-
-  config = {
-    resource_group_name  = "rgtfsource"
-    storage_account_name = "stremotestatefiles"
-    container_name       = "terraformstates"
-    key                  = "core/subnet/terraform.tfstate"
-  }
-}
-
-# IMPORT THE TAGS MODULE
 module "finops" {
   source = "github.com/adejonghm/terraform-modules/tags"
 
-  # VARIABLES
   owner       = var.owner
   managed_by  = var.management
   environment = var.environment
 
-  # ADDICIONAL TAGS
+  # ADDITIONAL TAGS
   additional_tags = {
     project = "${var.project}"
   }
 }
 
-# CREATE VIRTUAL MACHINES
+### NETWORK
+module "snet" {
+  source = "github.com/adejonghm/terraform-modules/subnet"
+
+  vnet_rg   = data.terraform_remote_state.vnet.outputs.vnet_rg
+  vnet_name = data.terraform_remote_state.vnet.outputs.vnet_name
+
+  for_each         = var.subnets
+  snet_name        = each.key
+  address_prefixes = each.value
+}
+
+### CREATE THE RESOURCES
 module "vm" {
   source = "./modules/vm"
 
@@ -78,10 +74,9 @@ module "vm" {
   os_sku       = var.os_sku
   os_version   = var.os_version
 
-  ## CUSTOM DATA FOR INSTALL NGINX
+  ## CUSTOM DATA TO INSTALL NGINX
   web_server_install = filebase64(var.script_path)
 
-  ## RESOURCE TAGS 
   tags = module.finops.tags
 
   ## OPTIONAL VARIABLES
@@ -92,7 +87,6 @@ module "vm" {
   # os_disk_type              = ""
 }
 
-# CREATE LOAD BALANCER
 module "load_balancer" {
   source = "./modules/load_balancer"
 
@@ -106,7 +100,6 @@ module "load_balancer" {
   lb_name  = var.lb_name
   lb_sku   = var.lb_sku
 
-  ## RESOURCE TAGS 
   tags = module.finops.tags
 
   ## OPTIONAL VARIABLES
@@ -117,7 +110,6 @@ module "load_balancer" {
   # bend_port             = ""
 }
 
-# CREATE RESOURCE GROUP
 resource "azurerm_resource_group" "rg" {
   location = data.terraform_remote_state.vnet.outputs.vnet_location
   name     = var.rg_name
@@ -125,7 +117,6 @@ resource "azurerm_resource_group" "rg" {
   tags = module.finops.tags
 }
 
-# ASSOCIATE THE NETWORK INTERFACE TO THE BACKEND ADDRESS POOL
 resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool" {
   depends_on = [
     module.vm,
