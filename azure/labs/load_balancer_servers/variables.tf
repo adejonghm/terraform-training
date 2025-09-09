@@ -158,5 +158,5 @@ variable "lb_sku" {
 variable "backend_port" {
   description = "Port number for the health probe to check backend VM health"
   type        = number
-  default     = 8090
+  default     = 80
 }
