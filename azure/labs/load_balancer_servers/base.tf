@@ -6,8 +6,8 @@ July 9, 2025
 
 ToDo:
 > [x] Create the subnets in the existing VNet
-> [ ] Create the NSG for the subnets with the rules for load balancer
-> [ ] Fix the Probe port in the Load Balancer
+> [x] Create the NSG for the subnets with the rules for load balancer
+> [ ] Create the documentation
 */
 
 
