@@ -25,7 +25,7 @@ variable "location" {
 variable "rg_name" {
   description = "Name of the Resource Group for Remote State"
   type        = string
-  default     = "rgtfsource"
+  default     = "rgcorestructure"
 }
 
 variable "st_name" {
