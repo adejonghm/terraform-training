@@ -19,19 +19,19 @@ variable "subscription_id" {
 variable "location" {
   description = "Azure location that I'm using"
   type        = string
-  default     = "West US 3"
+  default     = "ukwest"
 }
 
 variable "rg_name" {
   description = "Name of the Resource Group for Remote State"
   type        = string
-  default     = "rgcorestructure"
+  default     = "rgukwcstbaseresrcs"
 }
 
 variable "st_name" {
   description = "Name of the Azure Storage Account used for Terraform Remote State"
   type        = string
-  default     = "stremotestatefiles"
+  default     = "stukwcstterrfstate"
 }
 
 variable "st_tier" {
