@@ -9,6 +9,6 @@ locals {
   common_tags = {
     owner      = "adejonghm"
     managed_by = "terraform"
-    project    = "core"
+    project    = "core_structure"
   }
 }

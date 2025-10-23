@@ -18,19 +18,19 @@ variable "subscription_id" {
 variable "location" {
   description = "Azure Region used in the Terraform training"
   type        = string
-  default     = "West US 3"
+  default     = "ukwest"
 }
 
 variable "rg_name" {
   description = "Resource group used to create a Virtual Network"
   type        = string
-  default     = "rgvirtualnetworks"
+  default     = "rgukwcstnetworking"
 }
 
 variable "vnet_name" {
   description = "Virtual Network created to be used by other Virtual Machines"
   type        = string
-  default     = "vnetgeneralpurpose"
+  default     = "vnetukwcstgenpurpose"
 }
 
 variable "vnet_address_space" {
@@ -42,7 +42,7 @@ variable "vnet_address_space" {
 variable "snet_name" {
   description = "Name of the subnet within the Virtual Network"
   type        = string
-  default     = "snetgeneralpurpose001"
+  default     = "snetukwcstgenpurpose01"
 }
 
 variable "snet_ip" {
@@ -54,5 +54,5 @@ variable "snet_ip" {
 variable "nsg_name" {
   description = ""
   type        = string
-  default     = "nsg-core"
+  default     = "nsgukwcstgenpurpose"
 }

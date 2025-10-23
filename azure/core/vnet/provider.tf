@@ -15,8 +15,8 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "rgtfsource"
-    storage_account_name = "stremotestatefiles"
+    resource_group_name  = "rgukwcstbaseresrcs"
+    storage_account_name = "stukwcstterrfstate"
     container_name       = "tfstates"
     key                  = "core/vnet/terraform.tfstate"
   }
