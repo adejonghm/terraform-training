@@ -11,8 +11,8 @@ Mar 1, 2024
 data "terraform_remote_state" "vnet" {
   backend = "azurerm"
   config = {
-    resource_group_name  = "rgukwcstbaseresrcs"
-    storage_account_name = "stukwcstterrfstate"
+    resource_group_name  = "rgukscstbaseresrcs"
+    storage_account_name = "stukscstterrfstate"
     container_name       = "tfstates"
     key                  = "core/vnet/terraform.tfstate"
   }

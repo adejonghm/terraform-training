@@ -2,10 +2,6 @@
 Developed by adejonghm
 ----------
 
-Naming Convention:
-  [resource-abbreviation][platform-course][module]
-  [rg][udmtf][<module-name>]
-
 November 23, 2023
 */
 
@@ -19,19 +15,19 @@ variable "subscription_id" {
 variable "location" {
   description = "Azure location that I'm using"
   type        = string
-  default     = "ukwest"
+  default     = "uksouth"
 }
 
 variable "rg_name" {
   description = "Name of the Resource Group for Remote State"
   type        = string
-  default     = "rgukwcstbaseresrcs"
+  default     = "rgukscstbaseresrcs"
 }
 
 variable "st_name" {
   description = "Name of the Azure Storage Account used for Terraform Remote State"
   type        = string
-  default     = "stukwcstterrfstate"
+  default     = "stukscstterrfstate"
 }
 
 variable "st_tier" {

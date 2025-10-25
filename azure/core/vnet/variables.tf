@@ -2,10 +2,6 @@
 Developed by adejonghm
 ----------
 
-Naming Convention:
-  [resource-abbreviation][platform-course][module]
-  [rg][udmtf][<module-name>]
-
 Mar 1, 2024
 */
 
@@ -18,19 +14,19 @@ variable "subscription_id" {
 variable "location" {
   description = "Azure Region used in the Terraform training"
   type        = string
-  default     = "ukwest"
+  default     = "uksouth"
 }
 
 variable "rg_name" {
   description = "Resource group used to create a Virtual Network"
   type        = string
-  default     = "rgukwcstnetworking"
+  default     = "rgukscstnetworking"
 }
 
 variable "vnet_name" {
   description = "Virtual Network created to be used by other Virtual Machines"
   type        = string
-  default     = "vnetukwcstgenpurpose"
+  default     = "vnetukscstgenpurpose"
 }
 
 variable "vnet_address_space" {
@@ -42,17 +38,17 @@ variable "vnet_address_space" {
 variable "snet_name" {
   description = "Name of the subnet within the Virtual Network"
   type        = string
-  default     = "snetukwcstgenpurpose01"
+  default     = "snetukscstgenpurpose01"
 }
 
 variable "snet_ip" {
   description = "IP address range for the subnet within the Virtual Network"
   type        = list(string)
-  default     = ["10.88.1.0/24"]
+  default     = ["10.88.4.0/24"]
 }
 
 variable "nsg_name" {
   description = ""
   type        = string
-  default     = "nsgukwcstgenpurpose"
+  default     = "nsgukscstgenpurpose"
 }

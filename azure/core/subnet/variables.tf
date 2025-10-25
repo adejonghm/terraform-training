@@ -2,10 +2,6 @@
 Developed by adejonghm
 ----------
 
-Naming Convention:
-  [resource-abbreviation][platform-course][module]
-  [rg][udmtf][<module-name>]
-
 Mar 1, 2024
 */
 
@@ -18,7 +14,7 @@ variable "subnets" {
   description = "A map of subnet names to their corresponding address prefixes for the Virtual Network"
   type        = map(string)
   default = {
-    snetukwcstgenpurpose02 = "10.88.20.0/24",
+    snetukscstgenpurpose02 = "10.88.10.0/24",
   }
 }
 
