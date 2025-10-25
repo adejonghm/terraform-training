@@ -45,8 +45,8 @@ variable "nsg_rules" {
   )
   default = [
     {
-      name                       = "Allow-HTTP-Inbound"
-      priority                   = 100
+      name                       = "AllowHttpInBound"
+      priority                   = 200
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "Tcp"
