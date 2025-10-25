@@ -4,10 +4,10 @@ Developed by adejonghm
 
 July 9, 2025
 
-ToDo:
-> [x] Create the subnets in the existing VNet
-> [x] Create the NSG for the subnets with the rules for load balancer
-> [ ] Create the documentation
+Checklist:
+[x] Create the subnets in the existing VNet
+[x] Create the NSG for the subnets with the rules for load balancer
+[ ] Create the documentation
 */
 
 
@@ -16,8 +16,8 @@ data "terraform_remote_state" "vnet" {
   backend = "azurerm"
 
   config = {
-    resource_group_name  = "rgtfsource"
-    storage_account_name = "stremotestatefiles"
+    resource_group_name  = "rgukscstbaseresrcs"
+    storage_account_name = "stukscstterrfstate"
     container_name       = "tfstates"
     key                  = "core/vnet/terraform.tfstate"
   }
@@ -40,16 +40,16 @@ module "finops" {
 module "snet" {
   source = "github.com/adejonghm/terraform-modules/subnet"
 
-  vnet_rg          = data.terraform_remote_state.vnet.outputs.vnet_rg
-  vnet_name        = data.terraform_remote_state.vnet.outputs.vnet_name
+  vnet_rg          = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_rg
+  vnet_name        = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_name
   for_each         = var.subnets
   snet_name        = each.key
   address_prefixes = [each.value]
 }
 
 resource "azurerm_network_security_group" "nsg" {
-  resource_group_name = data.terraform_remote_state.vnet.outputs.vnet_rg
-  location            = data.terraform_remote_state.vnet.outputs.vnet_location
+  resource_group_name = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_rg
+  location            = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_location
   name                = var.nsg_name
 
   dynamic "security_rule" {
@@ -77,7 +77,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg_snet" {
 
 ### CREATE THE RESOURCES
 resource "azurerm_resource_group" "rg" {
-  location = data.terraform_remote_state.vnet.outputs.vnet_location
+  location = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_location
   name     = var.rg_name
 
   tags = module.finops.tags
