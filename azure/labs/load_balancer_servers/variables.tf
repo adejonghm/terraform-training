@@ -6,26 +6,26 @@ July 9, 2025
 */
 
 
-## GLOBAL
+####### GLOBAL #######
 variable "subscription_id" {
   description = "ID of the Subscription that I use"
   type        = string
 }
 
-## NETWORK
+####### NETWORK #######
 variable "subnets" {
   description = "Map of subnet names to their address prefixes"
   type        = map(string)
   default = {
-    snetservers001 = "10.88.20.0/24",
-    snetservers002 = "10.88.30.0/24"
+    snetukslabbalsrvpool01 = "10.88.20.0/24",
+    snetukslabbalsrvpool02 = "10.88.30.0/24"
   }
 }
 
 variable "nsg_name" {
   description = "Name of the Network Security Group used to protect the servers behind the load balancer"
   type        = string
-  default     = "nsg-lablbservers"
+  default     = "nsgukslabbalsrvpool"
 }
 
 variable "nsg_rules" {
@@ -58,7 +58,7 @@ variable "nsg_rules" {
   ]
 }
 
-## FINOPS MODULE
+####### FINOPS MODULE #######
 variable "owner" {
   description = "Owner of the resources for tagging and cost allocation purposes"
   type        = string
@@ -83,23 +83,24 @@ variable "project" {
   default     = "lb_servers"
 }
 
-## RESOURCE GROUP
+####### RESOURCE GROUP #######
 variable "rg_name" {
   description = "Name of the resource group where the resource will be deployed"
   type        = string
-  default     = "rglbservers"
+  default     = "rgukslabbalsrvpool"
 }
 
-## VIRTUAL MACHINE MODULE
+####### VIRTUAL MACHINE MODULE #######
 variable "number_of_instances" {
   description = "Number of virtual machine instances to create behind the load balancer"
   type        = number
   default     = 2
 }
+
 variable "vm_name" {
   description = "Prefix for the names of the virtual machines in the load balancer"
   type        = string
-  default     = "vmlxserver"
+  default     = "vmukslabwebserver"
 }
 
 variable "user" {
@@ -107,6 +108,7 @@ variable "user" {
   type        = string
   default     = "lx_user01"
 }
+
 variable "ssh_key_path" {
   description = "Path to the SSH public key file for authentication to the Linux virtual machines"
   type        = string
@@ -142,11 +144,11 @@ variable "script_path" {
   default     = "./scripts/install_nginx.sh"
 }
 
-## LOAD BALANCER MODULE
+####### LOAD BALANCER MODULE #######
 variable "lb_name" {
   description = "Name of the Azure Load Balancer resource"
   type        = string
-  default     = "lbextlxserverpool"
+  default     = "lbeukslabbalsrvpool01"
 }
 
 variable "lb_sku" {

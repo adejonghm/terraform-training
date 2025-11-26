@@ -7,7 +7,7 @@ August 6, 2025
 
 
 locals {
-  ## CREATING A VM IN EACH SUBNET
+  #### CREATING A VM IN EACH SUBNET ####
   number_of_vms = var.number_of_instances
   subnet_ids    = [for snet in module.snet : snet.subnet_id]
 
@@ -19,7 +19,7 @@ locals {
     }
   }
 
-  ## GET THE NETWORK INTERFACE IDs
+  #### GET THE NETWORK INTERFACE IDs ####
   vm_nic_ids = {
     for vm_name, vm in module.vm :
     vm_name => vm.nic_id

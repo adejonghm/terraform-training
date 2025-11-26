@@ -36,7 +36,7 @@ module "finops" {
   }
 }
 
-### NETWORK
+####### NETWORK #######
 module "snet" {
   source = "github.com/adejonghm/terraform-modules/subnet"
 
@@ -75,7 +75,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg_snet" {
   subnet_id = each.value.subnet_id
 }
 
-### CREATE THE RESOURCES
+####### CREATE THE RESOURCES #######
 resource "azurerm_resource_group" "rg" {
   location = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_location
   name     = var.rg_name
@@ -90,10 +90,10 @@ module "vm" {
     azurerm_resource_group.rg
   ]
 
-  ## NETWORK VARIABLES
+  #### NETWORK VARIABLES ####
   subnet_id = each.value.subnet_id
 
-  ## VM VARIABLES
+  #### VM VARIABLES ####
   for_each = local.vms
 
   location       = azurerm_resource_group.rg.location
@@ -102,18 +102,18 @@ module "vm" {
   vm_user        = var.user
   ssh_public_key = file(var.ssh_key_path)
 
-  ## OS VARIABLES
+  #### OS VARIABLES ####
   os_publisher = var.os_publisher
   os_offer     = var.os_distro
   os_sku       = var.os_sku
   os_version   = var.os_version
 
-  ## CUSTOM DATA TO INSTALL NGINX
+  #### CUSTOM DATA TO INSTALL NGINX ####
   web_server_install = filebase64(var.script_path)
 
   tags = module.finops.tags
 
-  ## OPTIONAL VARIABLES
+  #### OPTIONAL VARIABLES ####
   # pip_allocation_method     = ""
   # nic_private_ip_allocation = ""
   # vm_size                   = ""
@@ -128,7 +128,7 @@ module "load_balancer" {
     azurerm_resource_group.rg
   ]
 
-  ## LOAD BALANCER VARIABLES
+  #### LOAD BALANCER VARIABLES ####
   location   = azurerm_resource_group.rg.location
   lb_rg      = azurerm_resource_group.rg.name
   lb_name    = var.lb_name
@@ -138,7 +138,7 @@ module "load_balancer" {
 
   tags = module.finops.tags
 
-  ## OPTIONAL VARIABLES
+  #### OPTIONAL VARIABLES ####
   # pip_allocation_method = ""
   # protocol              = ""
   # fend_port             = ""
