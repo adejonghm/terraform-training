@@ -24,9 +24,9 @@ provider "azurerm" {
 data "terraform_remote_state" "vnet" {
   backend = "azurerm"
   config = {
-    resource_group_name  = "rgtfsource"
-    storage_account_name = "stremotestatefiles"
-    container_name       = "terraformstates"
+    resource_group_name  = "rgukscstbaseresrcs"
+    storage_account_name = "stukscstterrfstate"
+    container_name       = "tfstates"
     key                  = "core/vnet/terraform.tfstate"
   }
 }

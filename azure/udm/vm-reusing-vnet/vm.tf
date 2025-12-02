@@ -7,7 +7,7 @@ March 2, 2024
 
 resource "azurerm_resource_group" "rg" {
   name     = var.rg_name
-  location = data.terraform_remote_state.vnet.outputs.vnet_location
+  location = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_location
 
   tags = local.commong_tags
 }
@@ -19,6 +19,10 @@ resource "azurerm_public_ip" "pip" {
   allocation_method   = var.pip_allocation_method
 
   tags = local.commong_tags
+
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -28,17 +32,16 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = var.nic_name
-    subnet_id                     = data.terraform_remote_state.vnet.outputs.subnet_id
+    subnet_id                     = data.terraform_remote_state.vnet.outputs.subnet_genpurpose_id
     public_ip_address_id          = azurerm_public_ip.pip.id
     private_ip_address_allocation = var.private_ip_allocation_method
   }
 
   tags = local.commong_tags
-}
 
-resource "azurerm_network_interface_security_group_association" "nsg_nic" {
-  network_interface_id      = azurerm_network_interface.nic.id
-  network_security_group_id = data.terraform_remote_state.vnet.outputs.nsg_core_id
+  depends_on = [
+    azurerm_resource_group.rg,
+  ]
 }
 
 resource "azurerm_linux_virtual_machine" "reusing_vnet" {
@@ -67,4 +70,13 @@ resource "azurerm_linux_virtual_machine" "reusing_vnet" {
   }
 
   tags = local.commong_tags
+
+  depends_on = [
+    azurerm_network_interface.nic
+  ]
 }
+
+# resource "azurerm_network_interface_security_group_association" "nsg_nic" {
+#   network_interface_id      = azurerm_network_interface.nic.id
+#   network_security_group_id = data.terraform_remote_state.vnet.outputs.nsg_core_id
+# }
