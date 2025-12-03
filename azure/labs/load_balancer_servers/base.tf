@@ -40,8 +40,9 @@ module "finops" {
 module "snet" {
   source = "github.com/adejonghm/terraform-modules/subnet"
 
-  vnet_rg          = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_rg
-  vnet_name        = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_name
+  vnet_rg   = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_rg
+  vnet_name = data.terraform_remote_state.vnet.outputs.vnet_genpurpose_name
+
   for_each         = var.subnets
   snet_name        = each.key
   address_prefixes = [each.value]
@@ -66,9 +67,15 @@ resource "azurerm_network_security_group" "nsg" {
       destination_address_prefix = security_rule.value.destination_address_prefix
     }
   }
+
+  tags = module.finops.tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_snet" {
+  depends_on = [
+    module.snet,
+    azurerm_network_security_group.nsg
+  ]
   network_security_group_id = azurerm_network_security_group.nsg.id
 
   for_each  = module.snet
@@ -90,12 +97,12 @@ module "vm" {
     azurerm_resource_group.rg
   ]
 
+  for_each = local.vm_to_subnet
+
   #### NETWORK VARIABLES ####
-  subnet_id = each.value.subnet_id
+  subnet_id = module.snet[each.value].subnet_id
 
   #### VM VARIABLES ####
-  for_each = local.vms
-
   location       = azurerm_resource_group.rg.location
   vm_rg          = azurerm_resource_group.rg.name
   vm_name        = each.key
@@ -150,9 +157,9 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic_bpool
     module.load_balancer
   ]
 
-  for_each = local.vm_nic_ids
+  for_each = local.vm_to_subnet
 
-  network_interface_id    = each.value
+  network_interface_id    = module.vm[each.key].nic_id
   backend_address_pool_id = module.load_balancer.backend_address_pool_id
   ip_configuration_name   = module.vm[each.key].ip_configuration_name[0].name
 }

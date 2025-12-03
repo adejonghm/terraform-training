@@ -45,13 +45,13 @@ variable "nsg_rules" {
   )
   default = [
     {
-      name                       = "AllowHttpInBound"
-      priority                   = 200
+      name                       = "AllowHTTPInBound"
+      priority                   = 100
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "Tcp"
       source_port_range          = "*"
-      destination_port_range     = "80"
+      destination_port_range     = "9090"
       source_address_prefix      = "*"
       destination_address_prefix = "*"
     }
@@ -91,16 +91,18 @@ variable "rg_name" {
 }
 
 ####### VIRTUAL MACHINE MODULE #######
-variable "number_of_instances" {
-  description = "Number of virtual machine instances to create behind the load balancer"
-  type        = number
-  default     = 2
-}
-
 variable "vm_name" {
-  description = "Prefix for the names of the virtual machines in the load balancer"
-  type        = string
-  default     = "vmukslabwebserver"
+  description = "Names of the virtual machines in the load balancer"
+  type        = list(string)
+  default = [
+    "vmukslabwebserver01",
+    "vmukslabwebserver02"
+  ]
+
+  validation {
+    condition     = length(var.vm_name) == length(var.subnets)
+    error_message = "The number of VMs must be equal to the number of Subnets."
+  }
 }
 
 variable "user" {
@@ -160,5 +162,5 @@ variable "lb_sku" {
 variable "backend_port" {
   description = "Port number for the health probe to check backend VM health"
   type        = number
-  default     = 80
+  default     = 9090
 }

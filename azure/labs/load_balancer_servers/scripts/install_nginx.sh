@@ -1,19 +1,15 @@
 #!/bin/bash
 
-# update all packages
+## update all packages
 apt-get update -y
 
-# install nginx
+## install nginx
 apt-get install -y nginx
 
-# remove index.nginx-debian.html
+## remove index.nginx-debian.html
 rm -f /var/www/html/index.nginx-debian.html
 
-# change the port to 8090
-# sed -i 's/listen 80 default_server;/listen 8090 default_server;/g' /etc/nginx/sites-available/default
-# sed -i 's/listen \[::\]:80 default_server;/listen [::]:8090 default_server;/g' /etc/nginx/sites-available/default
-
-# create new custom index.html with styled content
+## create new custom index.html with styled content
 cat > /var/www/html/index.html <<EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -104,7 +100,6 @@ cat > /var/www/html/index.html <<EOF
     </p>
     <div class="hostname">$(hostname)</div>
     <div class="info">
-      <p>Nginx is running on port 8090</p>
       <p style="margin-top: 10px;">Powered by Azure Infrastructure</p>
     </div>
   </div>
@@ -112,6 +107,9 @@ cat > /var/www/html/index.html <<EOF
 </html>
 EOF
 
-# start the service
-systemctl enable nginx
-systemctl start nginx
+## change the port to 9090
+sed -i 's/listen 80 default_server;/listen 9090 default_server;/g' /etc/nginx/sites-available/default
+sed -i 's/listen \[::\]:80 default_server;/listen [::]:9090 default_server;/g' /etc/nginx/sites-available/default
+
+## start the service
+systemctl restart nginx.service
