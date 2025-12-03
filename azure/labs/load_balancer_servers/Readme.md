@@ -1,193 +1,481 @@
-# Load Balancing Linux Servers Lab
+# Azure Load Balancer with Linux Servers
 
-## Overview
+A Terraform project that demonstrates Infrastructure as Code (IaC) by deploying multiple Linux virtual machines behind an Azure Load Balancer. This lab showcases best practices for high availability, automated provisioning, and modular infrastructure design.
 
-This lab demonstrates how to deploy multiple Linux virtual machines in Azure with a fully functional load balancer. The infrastructure is built using Terraform and includes proper tagging, modular design, remote state management, and automated web server installation.
+## 📋 Table of Contents
 
-## Architecture
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Outputs](#outputs)
+- [Testing](#testing)
+- [Cleanup](#cleanup)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 
-The lab creates the following resources:
+## 🎯 Overview
 
-- **Resource Group**: Centralized resource management with comprehensive tagging
+This project deploys a production-ready infrastructure setup in Azure consisting of:
+
 - **Multiple Linux VMs**: Ubuntu 22.04 LTS virtual machines distributed across subnets
-- **Network Integration**: VMs are placed in existing subnets from remote state
-- **Load Balancer**: Standard SKU Azure Load Balancer with health probes
-- **Backend Pool**: VMs are automatically added to the load balancer backend pool
-- **Web Server Installation**: Automated nginx installation via custom data scripts
-- **Tagging**: Comprehensive tagging using a dedicated tags module for cost management
+- **Azure Load Balancer**: Standard SKU load balancer with health probes for high availability
+- **Network Security**: Network Security Groups (NSG) with proper firewall rules
+- **Automated Setup**: Nginx web server installation via custom data scripts
+- **Remote State**: Integration with existing VNet infrastructure via Terraform remote state
+- **Cost Management**: Comprehensive resource tagging for FinOps and cost allocation
 
-## Prerequisites
+## 🏗️ Architecture
 
-Before running this lab, ensure you have:
-
-1. **Azure CLI** installed and authenticated
-2. **Terraform** installed (version 1.0+)
-3. **SSH Key Pair** generated and available
-4. **Azure Subscription** with appropriate permissions
-5. **Remote State Backend** configured (Azure Storage Account)
-6. **Existing VNet and Subnets** deployed via remote state
-
-## File Structure
-
-```bash
-load_balancer_linux_servers/
-├── base.tf               # Main infrastructure configuration
-├── locals.tf             # Local variables and VM mapping logic
-├── variables.tf          # Input variables definition
-├── outputs.tf            # Output values
-├── provider.tf           # Azure provider configuration
-├── backend.tf            # Remote state configuration
-├── terraform.tfvars      # Variable values
-├── modules/
-│   ├── vm/               # Linux VM module
-│   ├── tags/             # Tagging module
-│   └── load_balancer/    # Load balancer module
-├── scripts/
-│   └── install_nginx.sh  # Web server installation script
-└── README.md             # This file
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Azure Cloud                             │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │           Azure Load Balancer (Standard SKU)          │  │
+│  │         Public IP: <lb_frontend_ip>                   │  │
+│  └───────────────────┬──────────────────────────────────┘  │
+│                      │                                        │
+│         ┌────────────┴────────────┐                          │
+│         │                         │                          │
+│  ┌──────▼──────┐          ┌──────▼──────┐                   │
+│  │   Subnet 1  │          │   Subnet 2  │                   │
+│  │ 10.88.20.0/24│          │ 10.88.30.0/24│                   │
+│  │             │          │             │                   │
+│  │  ┌────────┐ │          │  ┌────────┐ │                   │
+│  │  │  VM 1  │ │          │  │  VM 2  │ │                   │
+│  │  │ Nginx  │ │          │  │ Nginx  │ │                   │
+│  │  └────────┘ │          │  └────────┘ │                   │
+│  └─────────────┘          └─────────────┘                   │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │         Network Security Group (NSG)                  │  │
+│  │    Rules: Allow HTTP (port 9090) from Load Balancer  │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## Configuration
+### Traffic Flow
+
+1. **Client Request** → Public IP of Load Balancer
+2. **Load Balancer** → Health probe checks backend VMs
+3. **Traffic Distribution** → Load Balancer routes to healthy VMs
+4. **Backend VMs** → Process request and return response
+5. **Response** → Returns through Load Balancer to client
+
+## ✨ Features
+
+### High Availability
+
+- **Multi-Subnet Distribution**: VMs are automatically distributed across different subnets
+- **Health Probes**: Automatic health checking ensures only healthy VMs receive traffic
+- **Failover**: Automatic failover if a VM becomes unhealthy
+
+### Infrastructure as Code
+
+- **Terraform Modules**: Reusable, modular infrastructure components
+- **Remote State**: Integration with existing VNet infrastructure
+- **Version Control**: All infrastructure defined in code
+
+### Automation
+
+- **Custom Data Scripts**: Automated nginx installation during VM provisioning
+- **SSH Key Authentication**: Secure, key-based access to Linux VMs
+- **Resource Tagging**: Comprehensive tagging for cost management and organization
+
+### Security
+
+- **Network Security Groups**: Firewall rules restricting access
+- **Private IPs**: VMs use private IPs, only Load Balancer has public IP
+- **SSH Key Authentication**: No password-based authentication
+
+## 📦 Prerequisites
+
+Before deploying this infrastructure, ensure you have:
+
+1. **Azure Account**
+   - Active Azure subscription
+   - Appropriate permissions to create resources (Contributor role minimum)
+
+2. **Azure CLI**
+
+   ```bash
+   # Install Azure CLI (if not already installed)
+   # macOS
+   brew install azure-cli
+   
+   # Login to Azure
+   az login
+   ```
+
+3. **Terraform**
+
+   ```bash
+   # Install Terraform (version >= 1.5.0)
+   # macOS
+   brew install terraform
+   
+   # Verify installation
+   terraform version
+   ```
+
+4. **SSH Key Pair**
+
+   ```bash
+   # Generate SSH key pair (if not exists)
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   
+   # Public key will be at: ~/.ssh/id_rsa.pub
+   ```
+
+5. **Remote State Backend**
+   - Existing Azure Storage Account for Terraform state
+   - Existing VNet and subnets deployed via remote state
+   - Remote state backend configured in `backend.tf`
+
+6. **Required Modules**
+   - Remote modules from GitHub:
+     - `github.com/adejonghm/terraform-modules/tags` (FinOps tagging)
+     - `github.com/adejonghm/terraform-modules/subnet` (Subnet creation)
+
+## 📁 Project Structure
+
+```
+load_balancer_servers/
+├── base.tf                    # Main infrastructure configuration
+├── locals.tf                  # Local variables and VM-to-subnet mapping
+├── variables.tf               # Input variables definition
+├── outputs.tf                 # Output values
+├── provider.tf                # Azure provider configuration
+├── backend.tf                 # Remote state backend configuration
+├── terraform.tfvars           # Variable values (user-specific)
+├── modules/
+│   ├── vm/                    # Linux VM module
+│   │   ├── vm.tf              # VM resource definitions
+│   │   ├── variables.tf       # VM module variables
+│   │   └── outputs.tf         # VM module outputs
+│   └── load_balancer/         # Load balancer module
+│       ├── lb.tf              # Load balancer resource definitions
+│       ├── variables.tf       # Load balancer module variables
+│       └── outputs.tf         # Load balancer module outputs
+├── scripts/
+│   └── install_nginx.sh       # Web server installation script
+└── README.md                  # This file
+```
+
+### File Dependencies
+
+```
+provider.tf → base.tf → modules/vm/ → modules/load_balancer/
+     ↓           ↓            ↓              ↓
+backend.tf  variables.tf  locals.tf    outputs.tf
+     ↓           ↓
+terraform.tfvars
+```
+
+## ⚙️ Configuration
 
 ### Required Variables
 
-| Variable | Description | Type | Default |
-|----------|-------------|------|---------|
-| `subscription_id` | Azure Subscription ID | string | - |
-| `ssh_key_path` | Path to SSH public key | string | - |
+Edit `terraform.tfvars` with your specific values:
 
-### Key Variables
+```hcl
+subscription_id = "your-azure-subscription-id"
+ssh_key_path    = "~/.ssh/id_rsa.pub"
+```
 
-| Variable | Description | Type | Default |
-|----------|-------------|------|---------|
-| `number_of_instances` | Number of VMs to create | number | 2 |
-| `vm_name` | VM naming prefix | string | "vmlxserver" |
-| `user` | Linux VM admin username | string | "lx_user01" |
-| `rg_name` | Resource group name | string | "rgbalancingtraffic" |
-| `lb_name` | Load balancer name | string | "lbextlxserverpool" |
-| `lb_sku` | Load balancer SKU | string | "Standard" |
+### Key Variables (with defaults)
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `rg_name` | Resource group name | string |
+| `vm_name` | List of VM names | list(string) |
+| `user` | Linux VM admin username | string |
+| `lb_name` | Load balancer name | string |
+| `lb_sku` | Load balancer SKU | string |
+| `backend_port` | Health probe port | number |
+| `subnets` | Map of subnet names to CIDR blocks | map(string) |
 
 ### FinOps Variables
 
-| Variable | Description | Type | Default |
-|----------|-------------|------|---------|
-| `owner` | Resource owner | string | "adejonghm" |
-| `management` | Management tool | string | "terraform" |
-| `environment` | Environment | string | "labs" |
-| `project` | Project name | string | "lb_linux_servers" |
+| Variable | Description |
+|----------|-------------|
+| `owner` | Resource owner |
+| `management` | Management tool |
+| `environment` | Environment (dev/test/prod/labs) |
+| `project` | Project name |
 
-## Usage
+### Network Configuration
+
+The project creates two subnets by default:
+
+- `snetukslabbalsrvpool01`: `10.88.20.0/24`
+- `snetukslabbalsrvpool02`: `10.88.30.0/24`
+
+Each VM is automatically assigned to a subnet. The number of VMs must equal the number of subnets.
+
+### Backend Configuration
+
+Update `backend.tf` with your remote state configuration:
+
+```hcl
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "your-rg-name"
+    storage_account_name = "your-storage-account"
+    container_name       = "tfstates"
+    key                  = "labs/load_balancer_servers/terraform.tfstate"
+  }
+}
+```
+
+## 🚀 Usage
 
 ### 1. Initialize Terraform
 
 ```bash
+# Initialize Terraform and download providers/modules
 terraform init
 ```
 
-### 2. Review the Plan
+### 2. Review the Execution Plan
 
 ```bash
+# Preview changes before applying
 terraform plan
 ```
 
 ### 3. Apply the Configuration
 
 ```bash
+# Deploy the infrastructure
 terraform apply
+
+# Type 'yes' when prompted to confirm
 ```
 
 ### 4. Access the Load Balancer
 
-After deployment, you can access the web application through the load balancer:
+After deployment completes:
 
 ```bash
 # Get the load balancer frontend IP
 terraform output lb_frontend_ip
 
-# Access the web application
-curl http://<load_balancer_ip>
+# Test the web application
+curl http://$(terraform output -raw lb_frontend_ip):9090
 ```
 
-## Features
-
-### Load Balancer Configuration
-
-- **Standard SKU**: High availability and advanced features
-- **Health Probes**: Automatic health checking of backend VMs
-- **Backend Pool**: Automatic VM registration in load balancer pool
-- **Frontend IP**: Public IP for external access
-
-### VM Distribution
-
-- **Subnet Distribution**: VMs are automatically distributed across available subnets
-- **High Availability**: Multiple VMs across different subnets for redundancy
-- **Configurable Count**: Easy to scale by changing `number_of_instances`
-
-### Automated Setup
-
-- **Nginx Installation**: Automated web server setup via custom data scripts
-- **SSH Key Authentication**: Secure access to Linux VMs
-- **Ubuntu 22.04 LTS**: Latest stable Ubuntu release
-
-### Remote State Integration
-
-- **VNet Reference**: Uses existing VNet configuration from remote state
-- **Subnet Reference**: Automatically uses available subnets
-- **Consistent Networking**: Ensures infrastructure consistency
-
-### Cost Management
-
-- **Comprehensive Tagging**: All resources tagged for cost allocation
-- **FinOps Module**: Centralized tagging strategy
-- **Environment Tracking**: Clear environment identification
-
-## Outputs
+## 📤 Outputs
 
 The deployment provides the following outputs:
 
-- `lb_frontend_ip`: Public IP address of the Azure Load Balancer frontend
+| Output | Description |
+|--------|-------------|
+| `lb_frontend_ip` | Public IP address of the Azure Load Balancer frontend |
 
-## Testing the Load Balancer
-
-1. **Health Check**: The load balancer automatically health checks the VMs
-2. **Load Distribution**: Traffic is distributed across healthy VMs
-3. **Failover**: If a VM becomes unhealthy, traffic is routed to healthy VMs
-4. **Web Access**: Access the nginx welcome page through the load balancer IP
-
-## Cleanup
-
-To destroy all resources:
+To view all outputs:
 
 ```bash
-terraform destroy
+terraform output
 ```
 
-## Notes
+To get a specific output value:
 
-- **Default Configuration**: Deploys 2 Linux VMs by default
-- **Subnet Distribution**: VMs are automatically distributed across available subnets
-- **Web Server**: Each VM runs nginx web server
-- **Load Balancer**: Standard SKU with health probes enabled
-- **Security**: SSH key-based authentication for secure access
+```bash
+terraform output lb_frontend_ip
+```
 
-## Developer
+## 🧪 Testing
 
-**Developed by**: adejonghm  
-**Date**: August 6, 2025  
-**Purpose**: Terraform training lab for load balancing concepts with Azure Load Balancer
+### Health Check Verification
 
-## Troubleshooting
+1. **Check Load Balancer Health Probes**
+
+   ```bash
+   az network lb probe list \
+     --resource-group rgukslabbalsrvpool \
+     --lb-name lbeukslabbalsrvpool01 \
+     --output table
+   ```
+
+2. **Verify Backend Pool Members**
+
+   ```bash
+   az network lb address-pool address list \
+     --resource-group rgukslabbalsrvpool \
+     --lb-name lbeukslabbalsrvpool01 \
+     --pool-name bpool-lbeukslabbalsrvpool01 \
+     --output table
+   ```
+
+3. **Test Load Distribution**
+
+   ```bash
+   # Make multiple requests to see load distribution
+   for i in {1..10}; do
+     curl -s http://$(terraform output -raw lb_frontend_ip):9090 | grep -o "Server.*" || echo "Request $i"
+   done
+   ```
+
+### Expected Behavior
+
+- ✅ All VMs should be healthy in the load balancer backend pool
+- ✅ HTTP requests should be distributed across VMs
+- ✅ If a VM becomes unhealthy, traffic should route to healthy VMs only
+- ✅ Nginx welcome page should be accessible through the load balancer
+
+## 🧹 Cleanup
+
+To destroy all resources created by this Terraform configuration:
+
+```bash
+# Review what will be destroyed
+terraform plan -destroy
+
+# Destroy all resources
+terraform destroy
+
+# Type 'yes' when prompted to confirm
+```
+
+**⚠️ Warning**: This will permanently delete all resources including VMs, load balancer, and associated networking components.
+
+## 🔧 Troubleshooting
 
 ### Common Issues
 
-1. **SSH Key Path**: Ensure the SSH public key path is correct in `terraform.tfvars`
-2. **Remote State**: Verify that the VNet and subnet remote state exists
-3. **Permissions**: Ensure Azure CLI has sufficient permissions to create resources
-4. **Load Balancer Health**: Check VM health status in Azure portal if web access fails
+#### 1. SSH Key Path Error
+
+```
+Error: open ~/.ssh/id_rsa.pub: no such file or directory
+```
+
+**Solution**: Ensure the SSH public key path in `terraform.tfvars` is correct. Use absolute path if needed:
+
+```hcl
+ssh_key_path = "/Users/your-username/.ssh/id_rsa.pub"
+```
+
+#### 2. Remote State Not Found
+
+```
+Error: Failed to get existing workspaces: storage container "tfstates" not found
+```
+
+**Solution**:
+
+- Verify the storage account and container exist
+- Check backend configuration in `backend.tf`
+- Ensure you have access to the storage account
+
+#### 3. VNet/Subnet Not Found
+
+```
+Error: subnet not found
+```
+
+**Solution**:
+
+- Verify the remote state contains VNet information
+- Check the remote state key path in `base.tf`
+- Ensure the VNet exists and is accessible
+
+#### 4. Load Balancer Health Probe Failing
+
+```
+All backend VMs showing as unhealthy
+```
+
+**Solution**:
+
+- Verify nginx is running on the VMs: `systemctl status nginx`
+- Check NSG rules allow traffic on port 9090
+- Verify the health probe port matches the nginx listening port
+- Check VM network connectivity
+
+#### 5. Permission Denied Errors
+
+```
+Error: authorization failed
+```
+
+**Solution**:
+
+- Verify Azure CLI is logged in: `az account show`
+- Check you have Contributor role on the subscription
+- Ensure service principal (if used) has appropriate permissions
 
 ### Verification Steps
 
-1. Check VM status in Azure portal
-2. Verify load balancer health probes
-3. Test web access through load balancer IP
-4. Confirm SSH access to individual VMs
+1. **Check Resource Group**
+
+   ```bash
+   az group show --name rgukslabbalsrvpool
+   ```
+
+2. **List All Resources**
+
+   ```bash
+   az resource list --resource-group rgukslabbalsrvpool --output table
+   ```
+
+3. **Check VM Status**
+
+   ```bash
+   az vm list --resource-group rgukslabbalsrvpool --show-details --output table
+   ```
+
+4. **View Load Balancer Details**
+
+   ```bash
+   az network lb show \
+     --resource-group rgukslabbalsrvpool \
+     --name lbeukslabbalsrvpool01
+   ```
+
+5. **Check NSG Rules**
+
+   ```bash
+   az network nsg rule list \
+     --resource-group rgukscstbaseresrcs \
+     --nsg-name nsgukslabbalsrvpool \
+     --output table
+   ```
+
+## 🤝 Contributing
+
+This is a learning lab project. Suggestions and improvements are welcome!
+
+### Development Guidelines
+
+- Follow Terraform best practices
+- Maintain consistent naming conventions
+- Update documentation when making changes
+- Test changes in a non-production environment first
+
+## 📝 License
+
+This project is provided as-is for educational and learning purposes.
+
+## 👤 Author
+
+**adejonghm**
+
+- Developed: July 9, 2025
+- Last Updated: December 3, 2025
+- Purpose: Terraform training lab for load balancing concepts with Azure Load Balancer
+
+## 📚 Additional Resources
+
+- [Azure Load Balancer Documentation](https://docs.microsoft.com/en-us/azure/load-balancer/)
+- [Terraform Azure Provider Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+- [Terraform Best Practices](https://www.terraform.io/docs/cloud/guides/recommended-practices/index.html)
+- [Azure Network Security Groups](https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview)
+
+---
+
+**Note**: This project uses remote modules from `github.com/adejonghm/terraform-modules`. Ensure you have access to these repositories or update the module sources accordingly.
