@@ -8,54 +8,54 @@ December 11, 2024
 */
 
 variable "my-subscription-id" {
-  type        = string
   description = "ID of the Subscription that I use"
+  type        = string
 }
 
 variable "location" {
+  description = "Azure location that I'm using"
   type        = string
   default     = "UK South"
-  description = "Azure location that I'm using"
 }
 
 variable "rg-name" {
+  description = "Resource Group name for Remote State"
   type        = string
   default     = "rglabs"
-  description = "Resource Group name for Remote State"
 }
 
 variable "storage-account-name" {
+  description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
   type        = string
   default     = "stlabswosharedkey"
-  description = "The name of the AWS S3 Bucket and Azure Storage Account used for Terraform Remote State"
 }
 
 variable "account-tier" {
+  description = "The storage account tier"
   type        = string
   default     = "Standard"
-  description = "The storage account tier"
 }
 
 variable "account-replication-type" {
+  description = "The storage account data replication type"
   type        = string
   default     = "LRS"
-  description = "The storage account data replication type"
 }
 
 variable "st-container-name" {
+  description = "The container name within the storage account"
   type        = string
   default     = "blobwithoutsharedkey"
-  description = "The container name within the storage account"
 }
 
 variable "access-key-enabled" {
+  description = "Disabling the Shared Key Access from the Storage Account"
   type        = string
   default     = false
-  description = "Disabling the Shared Key Access from the Storage Account"
 }
 
 variable "use-azure-ad" {
+  description = "Enabling use of Entra ID to connect into the Storage Account"
   type        = string
   default     = true
-  description = "Enabling use of Entra ID to connect into the Storage Account"
 }
