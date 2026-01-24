@@ -62,7 +62,7 @@ variable "st_tier" {
 }
 
 variable "st_kind" {
-  description = ""
+  description = "Kind of Storage Account (Storage, StorageV2, BlobStorage, etc.)"
   type        = string
   default     = "StorageV2"
 }
@@ -74,11 +74,11 @@ variable "st_replication_type" {
 }
 
 variable "error_file" {
-  description = ""
+  description = "Name of the error document (404 page) for static website hosting"
   type        = string
 }
 
 variable "index_file" {
-  description = ""
+  description = "Name of the index document (homepage) for static website hosting"
   type        = string
 }
