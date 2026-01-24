@@ -18,10 +18,10 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "rgudmtfstates"
-    storage_account_name = "studmtfstates"
-    container_name       = "remote-state"
-    key                  = "labs-st-without-shared-key/terraform.tfstate"
+    resource_group_name  = "rgukscstbaseresrcs"
+    storage_account_name = "stukscstterrfstate"
+    container_name       = "tfstates"
+    key                  = "labs/st-wo-shared-key/terraform.tfstate"
   }
 }
 

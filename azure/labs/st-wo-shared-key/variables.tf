@@ -14,7 +14,7 @@ variable "my-subscription-id" {
 
 variable "location" {
   type        = string
-  default     = "Brazil South"
+  default     = "UK South"
   description = "Azure location that I'm using"
 }
 
