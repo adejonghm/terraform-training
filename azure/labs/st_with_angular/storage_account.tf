@@ -33,8 +33,23 @@ resource "azurerm_storage_account" "st" {
   account_replication_type = var.st_replication_type
 }
 
-resource "azurerm_storage_account_static_website" "fed" {
+resource "azurerm_storage_account_static_website" "static_website" {
   storage_account_id = azurerm_storage_account.st.id
-  error_404_document = var.error_file
-  index_document     = var.index_file
+  index_document     = var.index_filename
+  error_404_document = var.error_filename
+}
+
+resource "azurerm_storage_blob" "html_blobs" {
+  for_each = var.file
+
+  storage_account_name   = azurerm_storage_account.st.name
+  storage_container_name = var.container_name
+  name                   = each.value.name
+  type                   = var.blob_type
+  content_type           = var.content_type
+  source                 = each.value.path
+
+  depends_on = [
+    azurerm_storage_account_static_website.static_website
+  ]
 }

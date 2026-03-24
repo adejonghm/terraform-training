@@ -73,12 +73,46 @@ variable "st_replication_type" {
   default     = "LRS"
 }
 
-variable "error_file" {
+variable "error_filename" {
   description = "Name of the error document (404 page) for static website hosting"
   type        = string
+  default     = "404.html"
 }
 
-variable "index_file" {
+variable "index_filename" {
   description = "Name of the index document (homepage) for static website hosting"
   type        = string
+  default     = "index.html"
+}
+
+variable "container_name" {
+  description = "Name of the storage container"
+  type        = string
+  default     = "$web"
+}
+
+variable "blob_type" {
+  description = "Type of blob to be created (Block, Page, or Append)"
+  type        = string
+  default     = "Block"
+}
+
+variable "content_type" {
+  description = "MIME type of the blob files (e.g., text/html, application/json)"
+  type        = string
+  default     = "text/html"
+}
+
+variable "file" {
+  description = "Map of files to upload to the storage account"
+  default = {
+    index = {
+      name = "index.html"
+      path = "./files/index.html"
+    }
+    error = {
+      name = "404.html"
+      path = "./files/404.html"
+    }
+  }
 }
