@@ -11,16 +11,7 @@ In this repository, you will find a series of practical laboratories I developed
 
 There are also other hands-on that are part of HashiCorp's Get Started Training Paths that you can find in the branch `hashicorp`.
 
-<hr/>
-
-<div align="center">
-
-  [![linkedin](https://img.shields.io/badge/LinkedIn-1D5D9B?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adejonghm)
-  [![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/816104924924084247)
-
-</div>
-
-### Repo structure
+## Repo structure
 
 ```plain
 GH.Repo
@@ -30,3 +21,12 @@ GH.Repo
  ├── branch: hashicorp -> This branch contains HashiCorp Terraform platform exercises and labs.
  └── branch: other_labs -> This branch contains older exercises and labs.
 ```
+
+<hr/>
+
+<div align="center">
+
+  [![linkedin](https://img.shields.io/badge/LinkedIn-1D5D9B?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adejonghm)
+  [![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/816104924924084247)
+
+</div>
