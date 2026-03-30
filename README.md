@@ -1,16 +1,5 @@
 # Terraform Training Path
 
-Repo structure:
-
-```plain
-GH.Repo
- ├── branch: main (*)
- ├── branch: aws -> This branch contains exercises and labs focused on the AWS provider.
- ├── branch: azure -> This branch contains exercises and labs focused on the Azure provider.
- ├── branch: hashicorp -> This branch contains HashiCorp Terraform platform exercises and labs.
- └── branch: other_labs -> This branch contains older exercises and labs.
-```
-
 <br/>
 
 > :warning: DISCLAIMER <br>
@@ -30,3 +19,14 @@ There are also other hands-on that are part of HashiCorp's Get Started Training 
   [![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/816104924924084247)
 
 </div>
+
+### Repo structure
+
+```plain
+GH.Repo
+ ├── branch: main (*)
+ ├── branch: aws -> This branch contains exercises and labs focused on the AWS provider.
+ ├── branch: azure -> This branch contains exercises and labs focused on the Azure provider.
+ ├── branch: hashicorp -> This branch contains HashiCorp Terraform platform exercises and labs.
+ └── branch: other_labs -> This branch contains older exercises and labs.
+```
