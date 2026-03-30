@@ -1,5 +1,16 @@
 # Terraform Training Path
 
+Repo structure:
+
+```plain
+GH.Repo
+ ├── branch: main (*)
+ ├── branch: aws -> This branch contains exercises and labs focused on the AWS provider.
+ ├── branch: azure -> This branch contains exercises and labs focused on the Azure provider.
+ ├── branch: hashicorp -> This branch contains HashiCorp Terraform platform exercises and labs.
+ └── branch: other_labs -> This branch contains older exercises and labs.
+```
+
 <br/>
 
 > :warning: DISCLAIMER <br>
